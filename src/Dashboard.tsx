@@ -7,20 +7,16 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { mainListItems } from "./MenuDrawer/ListItems";
-import Chart from "./MenuDrawer/Chart";
-import Deposits from "./MenuDrawer/Deposits";
-import Orders from "./MenuDrawer/Orders";
+import ListItems from "./MenuDrawer/MenuItems";
+import Divider from "@mui/material/Divider";
+import Orders from "./components/Orders";
+import { Outlet } from "react-router-dom";
 
 function Copyright(props: any) {
   return (
@@ -36,7 +32,7 @@ function Copyright(props: any) {
   );
 }
 
-const drawerWidth: number = 240;
+const drawerWidth: number = 210;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -64,6 +60,8 @@ const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
   "& .MuiDrawer-paper": {
+    backgroundColor: "#00152B",
+    color: "#FFF",
     position: "relative",
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -93,6 +91,7 @@ const Dashboard = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  // const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -102,6 +101,7 @@ const Dashboard = () => {
           <Toolbar
             sx={{
               pr: "24px",
+              backgroundColor: "#001D3A",
             }}
           >
             <IconButton
@@ -123,33 +123,44 @@ const Dashboard = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Bakeshop Dashboard
+              Dashboard
             </Typography>
             <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={1} color="secondary">
                 <NotificationsIcon />
               </Badge>
             </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
+          <Box mt={10}>
+            <List component="nav"><ListItems/></List>
+          </Box>
           <Toolbar
             sx={{
-              display: "flex",
+              marginTop: "auto",
+              backgroundColor: "#001D3A",
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "center",
               px: [1],
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              {open ? (
+                <ChevronLeftIcon
+                  fontSize="large"
+                  style={{ color: "lightgrey" }}
+                />
+              ) : (
+                <ChevronRightIcon
+                  fontSize="large"
+                  style={{ color: "lightgrey" }}
+                />
+              )}
             </IconButton>
           </Toolbar>
-          <List component="nav">
-            <Box mt={5}> {mainListItems}</Box>
-          </List>
         </Drawer>
-        
+
         <Box
           component="main"
           sx={{
@@ -163,7 +174,7 @@ const Dashboard = () => {
           }}
         >
           <Toolbar />
-          Content goes here
+          <Outlet />
         </Box>
       </Box>
     </ThemeProvider>

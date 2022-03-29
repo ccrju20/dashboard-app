@@ -1,5 +1,5 @@
 import { useState } from "react";
-import List from "./components/List";
+import List from "./List";
 
 interface IState {
   products: {
