@@ -16,7 +16,6 @@ const MenuItems = () => {
       <ListItemButton
         sx={{ marginBottom: 2 }}
         onClick={() => {
-          console.log("Main Page");
           navigate("/");
         }}
       >
@@ -29,7 +28,6 @@ const MenuItems = () => {
       <ListItemButton
         sx={{ marginBottom: 2 }}
         onClick={() => {
-          console.log("Products Page");
           navigate("/products");
         }}
       >
@@ -42,7 +40,6 @@ const MenuItems = () => {
       <ListItemButton
         sx={{ marginBottom: 2 }}
         onClick={() => {
-          console.log("Orders");
           navigate("/orders");
         }}
       >
@@ -55,7 +52,6 @@ const MenuItems = () => {
       <ListItemButton
         sx={{ marginBottom: 2 }}
         onClick={() => {
-          console.log("Users");
           navigate("/users");
         }}
       >
