@@ -31,7 +31,7 @@ const Products = () => {
   useEffect(() => {
     axios
       .get(PRODUCTS_REST_API_URL, {
-        params: { category: "all", page: 1, size: 10 },
+        params: { category: "all", page: 1, size: 15 },
       })
       .then((response) => {
         console.log(response.data);
