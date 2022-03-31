@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { IState as Props } from "./Products";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -6,32 +6,51 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { CardActionArea, CardActions, DialogProps } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Collapse from "@mui/material/Collapse";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
+import { TypeOf } from "yup";
 
-type closeReason = 'backdropClick' | 'escapeKeyDown' | 'closeButtonClick';
+type Product = {
+  id: number;
+  title: string;
+  description: string;
+  img: string;
+  category: string;
+  active: number;
+  options: {
+    id: number;
+    option_id: number;
+    price: number;
+    size: number;
+  }[];
+};
+
+type closeReason = "backdropClick" | "escapeKeyDown" | "closeButtonClick";
 
 export interface DialogState {
   open: boolean;
   close: (reason: closeReason) => void;
+  product: Product;
 }
 
 const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
   const [expanded, setExpanded] = useState({});
   const [open, setOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product>({} as any);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (product: Product): void => {
+    setSelectedProduct(product);
     setOpen(true);
   };
 
-  const handleClose = (value: closeReason) => {
+  const handleClose = (value: closeReason): void => {
     setOpen(false);
   };
 
@@ -47,7 +66,7 @@ const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
       return (
         <Grid item xs={12} md={4} lg={4} key={index}>
           <Card>
-            <CardActionArea onClick={handleClickOpen}>
+            <CardActionArea onClick={() => handleClickOpen(product)}>
               <CardHeader
                 avatar={
                   <Avatar sx={{ fontSize: 12, bgcolor: "#00152B" }}>
@@ -125,7 +144,7 @@ const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
 
   return (
     <>
-      <EditProduct open={open} close={handleClose} />
+      <EditProduct open={open} close={handleClose} product={selectedProduct} />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {renderList()}
@@ -137,3 +156,6 @@ const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
 };
 
 export default ProductList;
+function of<T>(arg0: {}, of: any, any: any): [any, any] {
+  throw new Error("Function not implemented.");
+}
