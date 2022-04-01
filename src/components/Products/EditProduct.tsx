@@ -15,6 +15,7 @@ import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import Notification from "./Notification";
 
 interface IFormInputs {
   id: number;
@@ -29,16 +30,19 @@ interface IFormInputs {
     price: number;
     size: number;
   }[];
-  product: {
-    id: number
-  }
 }
 
 const schema = yup.object().shape({
   title: yup.string(),
 });
 
-const EditProduct: React.FC<Props> = ({ open, close, product }) => {
+const EditProduct: React.FC<Props> = ({
+  open,
+  close,
+  product,
+  setLoadError,
+  setProducts,
+}) => {
   const {
     control,
     reset,
@@ -51,18 +55,51 @@ const EditProduct: React.FC<Props> = ({ open, close, product }) => {
     }, [product]),
   });
 
+  const [notification, setNotification] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const [updateError, setUpdateError] = useState(false);
+  const [active, setActive] = useState(product.active);
+
+  const handleCloseNotification = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setNotification(false);
+  };
+
   const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
     console.log(data);
     close("closeButtonClick");
-    // make api put call
-    // data[product] = { product.id }
-    axios.put("http://localhost:8080/api/v1/products", data).then((res) => {
-      console.log(res);
-    });
-    window.location.reload()
-  };
 
-  const [active, setActive] = useState(product.active);
+    data.options.map((option) => {
+      Object.assign(option, { product: { id: product.id } });
+    });
+    console.log(data);
+
+    // make api put call
+    axios
+      .put("http://localhost:8080/api/v1/products", data)
+      .then((res) => {
+        console.log(res);
+        setNotificationMsg(`Product ID: ${res.data.id} - Updated Successfully!`)
+        setNotification(true);
+        axios
+          .get("http://localhost:8080/api/v1/products", {
+            params: { category: "all", page: 1, size: 15 },
+          })
+          .then((response) => {
+            setProducts(response.data.products);
+          })
+          .catch((err) => {
+            setLoadError(true);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        setUpdateError(true)
+        setNotificationMsg(err.message)
+      });
+  };
 
   useEffect(() => {
     reset(product);
@@ -183,6 +220,12 @@ const EditProduct: React.FC<Props> = ({ open, close, product }) => {
           </DialogActions>
         </form>
       </Dialog>
+      <Notification
+          open={notification}
+          close={handleCloseNotification}
+          severity={!updateError ? "info" : "error"}
+          message={notificationMsg}
+        />
     </div>
   );
 };

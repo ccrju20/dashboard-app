@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { IState as Props } from "./Products";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -15,7 +15,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
-import { TypeOf } from "yup";
 
 type Product = {
   id: number;
@@ -38,9 +37,18 @@ export interface DialogState {
   open: boolean;
   close: (reason: closeReason) => void;
   product: Product;
+  products: Props["products"];
+  setProducts: Props["setProducts"];
+  setLoadError: Props["setLoadError"]
 }
 
-const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
+const ProductList: React.FC<Props> = ({
+  products,
+  setProducts,
+  loadError,
+  setLoadError,
+  isLoading,
+}) => {
   const [expanded, setExpanded] = useState({});
   const [open, setOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product>({} as any);
@@ -144,7 +152,14 @@ const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
 
   return (
     <>
-      <EditProduct open={open} close={handleClose} product={selectedProduct} />
+      <EditProduct
+        open={open}
+        close={handleClose}
+        product={selectedProduct}
+        products={products}
+        setProducts={setProducts}
+        setLoadError={setLoadError}
+      />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {renderList()}
@@ -156,6 +171,3 @@ const ProductList: React.FC<Props> = ({ products, loadError, isLoading }) => {
 };
 
 export default ProductList;
-function of<T>(arg0: {}, of: any, any: any): [any, any] {
-  throw new Error("Function not implemented.");
-}

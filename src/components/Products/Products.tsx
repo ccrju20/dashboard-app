@@ -17,7 +17,9 @@ export interface IState {
       size: number;
     }[];
   }[];
+  setProducts: React.Dispatch<React.SetStateAction<IState["products"]>>;
   loadError: boolean;
+  setLoadError: React.Dispatch<React.SetStateAction<IState["loadError"]>>;
   isLoading: boolean;
 }
 
@@ -47,7 +49,13 @@ const Products = () => {
   return (
     <>
       <h1>Products</h1>
-      <List products={products} loadError={loadError} isLoading={isLoading} />
+      <List
+        products={products}
+        setProducts={setProducts}
+        loadError={loadError}
+        setLoadError={setLoadError}
+        isLoading={isLoading}
+      />
       {loadError && <h1>An error occurred</h1>}
     </>
   );
