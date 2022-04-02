@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IState as Props } from "./Products";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -15,7 +15,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
-
+import AddProductOption from './AddProductOptions'
 
 export type Product = {
   id: number;
@@ -41,20 +41,18 @@ export interface DialogState {
   getProducts: Props["getProducts"];
 }
 
-const ProductList: React.FC<Props> = ({
-  products,
-  getProducts,
-}) => {
+const ProductList: React.FC<Props> = ({ products, getProducts }) => {
   const [expanded, setExpanded] = useState({});
   const [open, setOpen] = useState(false);
+  const [optionOpen, setOptionOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product>({} as any);
 
-  const handleClickOpen = (product: Product): void => {
+  const handleEditOpen = (product: Product): void => {
     setSelectedProduct(product);
     setOpen(true);
   };
 
-  const handleClose = (value: closeReason): void => {
+  const handleEditClose = (value: closeReason): void => {
     setOpen(false);
   };
 
@@ -65,12 +63,21 @@ const ProductList: React.FC<Props> = ({
     }));
   };
 
+  const handleOptionOpen = (product: Product): void => {
+    setSelectedProduct(product);
+    setOptionOpen(true);
+  };
+
+  const handleOptionClose = (value: closeReason): void => {
+    setOptionOpen(false);
+  };
+
   const renderList = (): JSX.Element[] => {
     return products.map((product, index) => {
       return (
         <Grid item xs={12} md={4} lg={4} key={index}>
           <Card>
-            <CardActionArea onClick={() => handleClickOpen(product)}>
+            <CardActionArea onClick={() => handleEditOpen(product)}>
               <CardHeader
                 avatar={
                   <Avatar sx={{ fontSize: 12, bgcolor: "#00152B" }}>
@@ -108,6 +115,8 @@ const ProductList: React.FC<Props> = ({
               </CardContent>
               <Divider />
               <br />
+            </CardActionArea>
+            <CardActionArea onClick={() => handleOptionOpen(product)}>
               <Typography variant="overline" color="text.secondary">
                 Variants
               </Typography>
@@ -150,7 +159,13 @@ const ProductList: React.FC<Props> = ({
     <>
       <EditProduct
         open={open}
-        close={handleClose}
+        close={handleEditClose}
+        product={selectedProduct}
+        getProducts={getProducts}
+      />
+      <AddProductOption
+        open={optionOpen}
+        close={handleOptionClose}
         product={selectedProduct}
         getProducts={getProducts}
       />

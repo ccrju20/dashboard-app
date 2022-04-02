@@ -9,7 +9,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import { Box } from "@mui/material";
+import { Box, Divider } from "@mui/material";
 import { DialogState as Props } from "./List";
 import { useForm, SubmitHandler, Controller, Control } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,6 +17,7 @@ import * as yup from "yup";
 import axios from "axios";
 import Notification from "./Notification";
 import EditProductOption from "./EditProductOption";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
 interface IFormInputs {
   id: number;
@@ -79,42 +80,45 @@ const EditProduct: React.FC<Props> = ({
 
   // Form Submission
   const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
-    console.log(data);
     close("closeButtonClick");
 
     data.options.map((option) => {
       Object.assign(option, { product: { id: product.id } });
     });
     console.log(data);
-
     // make api put call
-    // axios
-    //   .put("api/v1/products", data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setNotificationMsg(
-    //       `Product ID: ${res.data.id} - Updated Successfully!`
-    //     );
-    //     setNotification(true);
-    //     getProducts();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setUpdateError(true);
-    //     setNotificationMsg(err.message);
-    //   });
+    axios
+      .put("api/v1/products", data)
+      .then((res) => {
+        console.log(res);
+        setNotificationMsg(
+          `Product ID: ${res.data.id} - Updated Successfully!`
+        );
+        setNotification(true);
+        getProducts();
+      })
+      .catch((err) => {
+        console.log(err);
+        setUpdateError(true);
+        setNotificationMsg(err.message);
+      });
   };
 
   useEffect(() => {
     reset(product);
     setActive(product.active);
-  }, [product]);
+  }, [product, reset]);
 
   return (
     <div>
       <Dialog open={open} onClose={close} maxWidth="md" fullWidth={true}>
         <form onSubmit={handleSubmit(formSubmitHandler)}>
-          <DialogTitle>Edit Product ID: {product.id} </DialogTitle>
+          <DialogTitle>
+            <EditTwoToneIcon /> {product.title} (Edit)
+            <DialogContentText ml={4}>
+              Product ID: {product.id}
+            </DialogContentText>
+          </DialogTitle>
           <Grid container justifyContent="center">
             <Controller
               name="title"
@@ -140,9 +144,7 @@ const EditProduct: React.FC<Props> = ({
                     onChange={(event, value) => {
                       console.log(value);
                       onChange(value ? 1 : 0);
-                      {
-                        value ? setActive(1) : setActive(0);
-                      }
+                      value ? setActive(1) : setActive(0);
                     }}
                   />
                 )}
@@ -207,6 +209,10 @@ const EditProduct: React.FC<Props> = ({
               )}
             />
             <br />
+          </DialogContent>
+          <Divider />
+          <DialogTitle> Edit Product Options </DialogTitle>
+          <DialogContent>
             <EditProductOption
               productOptions={product.options}
               formSubmitHandler={formSubmitHandler}
@@ -214,11 +220,13 @@ const EditProduct: React.FC<Props> = ({
               controlProduct={control}
             />
           </DialogContent>
+          <br />
           <DialogActions>
             <Button type="submit"> Submit</Button>
             <Button onClick={() => close("closeButtonClick")}>Cancel</Button>
           </DialogActions>
         </form>
+        + add product
       </Dialog>
       <Notification
         open={notification}
