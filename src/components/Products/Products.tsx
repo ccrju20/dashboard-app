@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import List from "./List";
+import CircularProgress from "@mui/material/CircularProgress";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 export interface IState {
   products: {
@@ -17,20 +20,17 @@ export interface IState {
       size: number;
     }[];
   }[];
-  setProducts: React.Dispatch<React.SetStateAction<IState["products"]>>;
-  loadError: boolean;
-  setLoadError: React.Dispatch<React.SetStateAction<IState["loadError"]>>;
-  isLoading: boolean;
+  getProducts: () => void;
 }
 
-const PRODUCTS_REST_API_URL = "http://localhost:8080/api/v1/products";
+const PRODUCTS_REST_API_URL = "api/v1/products";
 
 const Products = () => {
   const [products, setProducts] = useState<IState["products"]>([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  const getProducts = () => {
     axios
       .get(PRODUCTS_REST_API_URL, {
         params: { category: "all", page: 1, size: 15 },
@@ -44,19 +44,24 @@ const Products = () => {
         setLoadError(true);
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getProducts();
   }, []);
 
   return (
     <>
-      <h1>Products</h1>
-      <List
-        products={products}
-        setProducts={setProducts}
-        loadError={loadError}
-        setLoadError={setLoadError}
-        isLoading={isLoading}
-      />
-      {loadError && <h1>An error occurred</h1>}
+      <Grid container justifyContent="center">
+        <h1>Products</h1>
+        <List products={products} getProducts={getProducts} />
+        {isLoading && !loadError && (
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        )}
+        {loadError && <h1>An error occurred</h1>}
+      </Grid>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IState as Props } from "./Products";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -16,7 +16,8 @@ import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
 
-type Product = {
+
+export type Product = {
   id: number;
   title: string;
   description: string;
@@ -37,17 +38,12 @@ export interface DialogState {
   open: boolean;
   close: (reason: closeReason) => void;
   product: Product;
-  products: Props["products"];
-  setProducts: Props["setProducts"];
-  setLoadError: Props["setLoadError"]
+  getProducts: Props["getProducts"];
 }
 
 const ProductList: React.FC<Props> = ({
   products,
-  setProducts,
-  loadError,
-  setLoadError,
-  isLoading,
+  getProducts,
 }) => {
   const [expanded, setExpanded] = useState({});
   const [open, setOpen] = useState(false);
@@ -62,7 +58,7 @@ const ProductList: React.FC<Props> = ({
     setOpen(false);
   };
 
-  const handleExpandClick = (id: number): void => {
+  const handleExpandVariants = (id: number): void => {
     setExpanded((expanded) => ({
       ...expanded,
       [id]: !expanded[id as keyof {}],
@@ -83,7 +79,7 @@ const ProductList: React.FC<Props> = ({
                 }
                 title={product.title}
                 subheader={`status: ${
-                  product.active === 1 ? "active" : "non-active"
+                  product.active === 1 ? "active" : "inactive"
                 }`}
               />
               <CardMedia
@@ -136,7 +132,7 @@ const ProductList: React.FC<Props> = ({
             </CardActionArea>
             <IconButton
               aria-expanded={expanded[product.id as keyof {}]}
-              onClick={() => handleExpandClick(product.id)}
+              onClick={() => handleExpandVariants(product.id)}
             >
               {!expanded[product.id as keyof {}] ? (
                 <ExpandMoreIcon />
@@ -156,14 +152,11 @@ const ProductList: React.FC<Props> = ({
         open={open}
         close={handleClose}
         product={selectedProduct}
-        products={products}
-        setProducts={setProducts}
-        setLoadError={setLoadError}
+        getProducts={getProducts}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {renderList()}
-          {isLoading && !loadError && <h1>skeleton loading</h1>}
         </Grid>
       </Container>
     </>

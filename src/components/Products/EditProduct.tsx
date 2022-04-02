@@ -11,11 +11,12 @@ import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
 import { Box } from "@mui/material";
 import { DialogState as Props } from "./List";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler, Controller, Control } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import Notification from "./Notification";
+import EditProductOption from "./EditProductOption";
 
 interface IFormInputs {
   id: number;
@@ -32,6 +33,13 @@ interface IFormInputs {
   }[];
 }
 
+export interface EditProductOption {
+  formSubmitHandler: SubmitHandler<IFormInputs>;
+  productOptions: IFormInputs["options"];
+  errors: any;
+  controlProduct: Control<IFormInputs, any>;
+}
+
 const schema = yup.object().shape({
   title: yup.string(),
 });
@@ -40,8 +48,7 @@ const EditProduct: React.FC<Props> = ({
   open,
   close,
   product,
-  setLoadError,
-  setProducts,
+  getProducts,
 }) => {
   const {
     control,
@@ -60,13 +67,17 @@ const EditProduct: React.FC<Props> = ({
   const [updateError, setUpdateError] = useState(false);
   const [active, setActive] = useState(product.active);
 
-  const handleCloseNotification = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+  const handleCloseNotification = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
     setNotification(false);
   };
 
+  // Form Submission
   const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
     console.log(data);
     close("closeButtonClick");
@@ -77,28 +88,21 @@ const EditProduct: React.FC<Props> = ({
     console.log(data);
 
     // make api put call
-    axios
-      .put("http://localhost:8080/api/v1/products", data)
-      .then((res) => {
-        console.log(res);
-        setNotificationMsg(`Product ID: ${res.data.id} - Updated Successfully!`)
-        setNotification(true);
-        axios
-          .get("http://localhost:8080/api/v1/products", {
-            params: { category: "all", page: 1, size: 15 },
-          })
-          .then((response) => {
-            setProducts(response.data.products);
-          })
-          .catch((err) => {
-            setLoadError(true);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-        setUpdateError(true)
-        setNotificationMsg(err.message)
-      });
+    // axios
+    //   .put("api/v1/products", data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setNotificationMsg(
+    //       `Product ID: ${res.data.id} - Updated Successfully!`
+    //     );
+    //     setNotification(true);
+    //     getProducts();
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setUpdateError(true);
+    //     setNotificationMsg(err.message);
+    //   });
   };
 
   useEffect(() => {
@@ -153,16 +157,6 @@ const EditProduct: React.FC<Props> = ({
             alt="product"
           />
           <DialogContent>
-            {product.options?.map((option) => {
-              return (
-                <div key={option.id}>
-                  <span>
-                    SKU: {option.option_id} / size: {option.size} / price: $
-                    {option.price}
-                  </span>
-                </div>
-              );
-            })}
             <br />
             <br />
             <Controller
@@ -213,6 +207,12 @@ const EditProduct: React.FC<Props> = ({
               )}
             />
             <br />
+            <EditProductOption
+              productOptions={product.options}
+              formSubmitHandler={formSubmitHandler}
+              errors={errors}
+              controlProduct={control}
+            />
           </DialogContent>
           <DialogActions>
             <Button type="submit"> Submit</Button>
@@ -221,11 +221,11 @@ const EditProduct: React.FC<Props> = ({
         </form>
       </Dialog>
       <Notification
-          open={notification}
-          close={handleCloseNotification}
-          severity={!updateError ? "info" : "error"}
-          message={notificationMsg}
-        />
+        open={notification}
+        close={handleCloseNotification}
+        severity={!updateError ? "info" : "error"}
+        message={notificationMsg}
+      />
     </div>
   );
 };
