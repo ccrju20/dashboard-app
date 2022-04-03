@@ -1,4 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { object, string, number } from "yup";
+import { IDialog as Props } from "./Interfaces/IDialog";
+import { IProductForm } from "./Interfaces/IProductForm";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { Grid, Box, Divider } from "@mui/material";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -7,46 +14,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
 import Switch from "@mui/material/Switch";
-import { Box, Divider } from "@mui/material";
-import { DialogState as Props } from "./List";
-import { useForm, SubmitHandler, Controller, Control } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
 import Notification from "./Notification";
 import EditProductOption from "./EditProductOption";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
-interface IFormInputs {
-  id: number;
-  title: string;
-  description: string;
-  img: string;
-  category: string;
-  active: number;
-  options: {
-    id: number;
-    option_id: number;
-    price: number;
-    size: number;
-  }[];
-}
-
-export interface EditProductOption {
-  formSubmitHandler: SubmitHandler<IFormInputs>;
-  productOptions: IFormInputs["options"];
-  errors: any;
-  controlProduct: Control<IFormInputs, any>;
-}
-
-const schema = yup.object().shape({
-  title: yup.string().trim().min(1),
-  category: yup.string().trim().min(1),
-  active: yup.number(),
-  img: yup.string().trim().min(1),
-  description: yup.string().trim().min(1),
+export const editProductSchema = object({
+  title: string().trim().min(1),
+  category: string().trim().min(1),
+  active: number(),
+  img: string().trim().min(1),
+  description: string().trim().min(1),
 });
 
 const EditProduct: React.FC<Props> = ({
@@ -60,8 +38,8 @@ const EditProduct: React.FC<Props> = ({
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInputs>({
-    resolver: yupResolver(schema),
+  } = useForm<IProductForm>({
+    resolver: yupResolver(editProductSchema),
     defaultValues: useMemo(() => {
       return product;
     }, [product]),
@@ -83,7 +61,9 @@ const EditProduct: React.FC<Props> = ({
   };
 
   // Form Submission
-  const formSubmitHandler: SubmitHandler<IFormInputs> = (data: IFormInputs) => {
+  const formSubmitHandler: SubmitHandler<IProductForm> = (
+    data: IProductForm
+  ) => {
     close("closeButtonClick");
 
     data.options.map((option) => {
@@ -118,7 +98,7 @@ const EditProduct: React.FC<Props> = ({
       <Dialog open={open} onClose={close} maxWidth="md" fullWidth={true}>
         <form onSubmit={handleSubmit(formSubmitHandler)}>
           <DialogTitle>
-            <Grid container justifyContent="center" >
+            <Grid container justifyContent="center">
               <Grid item xs={12} sm={6}>
                 <EditTwoToneIcon /> {product.title} (Edit)
                 <DialogContentText ml={4}>
@@ -127,7 +107,7 @@ const EditProduct: React.FC<Props> = ({
               </Grid>
 
               <Grid item xs={10} sm={6} mt={2}>
-                <Grid container justifyContent={{md: "flex-end"}}>
+                <Grid container justifyContent={{ md: "flex-end" }}>
                   <Controller
                     name="category"
                     control={control}

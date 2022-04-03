@@ -1,9 +1,11 @@
-import { useEffect } from "react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { DialogState as Props } from "./List";
-import * as yup from "yup";
+import { IDialog as Props } from "./Interfaces/IDialog";
+import { IAddProductOption } from './Interfaces/IProductForm'
+import { SchemaOf, object, number} from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -12,7 +14,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -22,19 +23,13 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Popover from "@mui/material/Popover";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
-import { yupResolver } from "@hookform/resolvers/yup";
 
-interface IFormOptionInputs {
-  option_id: number;
-  price: number;
-  size: number;
-}
 const PRODUCT_OPTIONS_API_URL = "api/v1/products/options";
 
-const schema = yup.object().shape({
-  option_id: yup.number().typeError("Must be a number greater than 1").min(1).required(),
-  size: yup.number().typeError("Must be a number greater than 1").min(1).required(),
-  price: yup.number().typeError("Must be a number greater than 1").min(1).required(),
+const addProductOptionSchema: SchemaOf<IAddProductOption> = object({
+  option_id: number().typeError("Must be a number greater than 1").min(1).required(),
+  size: number().typeError("Must be a number greater than 1").min(1).required(),
+  price: number().typeError("Must be a number greater than 1").min(1).required(),
 });
 
 const AddProductOptions: React.FC<Props> = ({
@@ -48,13 +43,13 @@ const AddProductOptions: React.FC<Props> = ({
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormOptionInputs>({
-    resolver: yupResolver(schema),
+  } = useForm<IAddProductOption>({
+    resolver: yupResolver(addProductOptionSchema),
   });
 
   // Submit Add Option
-  const addOption: SubmitHandler<IFormOptionInputs> = (
-    option: IFormOptionInputs
+  const addOption: SubmitHandler<IAddProductOption> = (
+    option: IAddProductOption
   ) => {
     close("closeButtonClick");
     Object.assign(option, { product: { id: product.id } });

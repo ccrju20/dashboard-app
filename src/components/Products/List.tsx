@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { IState as Props } from "./Products";
+import { IProducts as Props, Product} from "./Interfaces/IProducts";
+import { closeReason } from './Interfaces/IDialog'
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -16,30 +17,6 @@ import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
 import AddProductOption from './AddProductOptions'
-
-export type Product = {
-  id: number;
-  title: string;
-  description: string;
-  img: string;
-  category: string;
-  active: number;
-  options: {
-    id: number;
-    option_id: number;
-    price: number;
-    size: number;
-  }[];
-};
-
-type closeReason = "backdropClick" | "escapeKeyDown" | "closeButtonClick";
-
-export interface DialogState {
-  open: boolean;
-  close: (reason: closeReason) => void;
-  product: Product;
-  getProducts: Props["getProducts"];
-}
 
 const ProductList: React.FC<Props> = ({ products, getProducts }) => {
   const [expanded, setExpanded] = useState({});

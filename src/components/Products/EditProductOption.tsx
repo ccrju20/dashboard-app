@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { EditProductOption as Props } from "./EditProduct";
+import { IEditProductOption as Props } from "./Interfaces/IProductForm";
 import { Controller } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -7,7 +7,6 @@ import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 
 const EditProductOption: React.FC<Props> = ({
-  formSubmitHandler,
   productOptions,
   controlProduct,
   errors,
