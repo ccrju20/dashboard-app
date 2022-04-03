@@ -4,39 +4,26 @@ import { Controller } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
 
-// interface IFormOptionInputs {
-//   option_id: number;
-//   price: number;
-//   size: number;
-//   product: {
-//     id: number;
-//   };
-// }
 const EditProductOption: React.FC<Props> = ({
   formSubmitHandler,
   productOptions,
   controlProduct,
   errors,
 }) => {
-
   return (
     <>
       <Grid container spacing={3} justifyContent="center">
         {productOptions?.map((option, index) => {
           return (
-            <Grid item xs={4} md={4} key={index}>
+            <Grid item xs={12} md={4} key={index}>
               <br />
               <Card elevation={3}>
                 <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    color="text.secondary"
-                    gutterBottom
-                  >
-                    Option {index + 1}
-                  </Typography>
+                  <Grid container justifyContent="center">
+                    <Avatar>{index + 1}</Avatar>
+                  </Grid>
                   <br />
                   <Controller
                     name={`options.${index}.option_id`}

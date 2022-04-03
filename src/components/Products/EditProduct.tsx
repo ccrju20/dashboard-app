@@ -42,7 +42,11 @@ export interface EditProductOption {
 }
 
 const schema = yup.object().shape({
-  title: yup.string(),
+  title: yup.string().trim().min(1),
+  category: yup.string().trim().min(1),
+  active: yup.number(),
+  img: yup.string().trim().min(1),
+  description: yup.string().trim().min(1),
 });
 
 const EditProduct: React.FC<Props> = ({
@@ -114,10 +118,35 @@ const EditProduct: React.FC<Props> = ({
       <Dialog open={open} onClose={close} maxWidth="md" fullWidth={true}>
         <form onSubmit={handleSubmit(formSubmitHandler)}>
           <DialogTitle>
-            <EditTwoToneIcon /> {product.title} (Edit)
-            <DialogContentText ml={4}>
-              Product ID: {product.id}
-            </DialogContentText>
+            <Grid container justifyContent="center" >
+              <Grid item xs={12} sm={6}>
+                <EditTwoToneIcon /> {product.title} (Edit)
+                <DialogContentText ml={4}>
+                  Product ID: {product.id}
+                </DialogContentText>
+              </Grid>
+
+              <Grid item xs={10} sm={6} mt={2}>
+                <Grid container justifyContent={{md: "flex-end"}}>
+                  <Controller
+                    name="category"
+                    control={control}
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        label="Category"
+                        variant="outlined"
+                        size="small"
+                        error={!!errors.category}
+                        helperText={
+                          errors.category ? errors.category?.message : ""
+                        }
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           </DialogTitle>
           <Grid container justifyContent="center">
             <Controller
@@ -160,7 +189,6 @@ const EditProduct: React.FC<Props> = ({
           />
           <DialogContent>
             <br />
-            <br />
             <Controller
               name="description"
               control={control}
@@ -195,20 +223,6 @@ const EditProduct: React.FC<Props> = ({
             />
             <br />
             <br />
-            <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Category"
-                  variant="outlined"
-                  error={!!errors.category}
-                  helperText={errors.category ? errors.category?.message : ""}
-                />
-              )}
-            />
-            <br />
           </DialogContent>
           <Divider />
           <DialogTitle> Edit Product Options </DialogTitle>
@@ -226,7 +240,6 @@ const EditProduct: React.FC<Props> = ({
             <Button onClick={() => close("closeButtonClick")}>Cancel</Button>
           </DialogActions>
         </form>
-        + add product
       </Dialog>
       <Notification
         open={notification}
