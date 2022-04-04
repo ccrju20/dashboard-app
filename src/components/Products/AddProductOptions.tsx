@@ -26,7 +26,7 @@ import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 const PRODUCT_OPTIONS_API_URL = "api/v1/products/options";
 
-const addProductOptionSchema: SchemaOf<IAddProductOption> = object({
+export const addProductOptionSchema: SchemaOf<IAddProductOption> = object({
   option_id: number().typeError("Must be a number greater than 1").min(1).required(),
   size: number().typeError("Must be a number greater than 1").min(1).required(),
   price: number().typeError("Must be a number greater than 1").min(1).required(),

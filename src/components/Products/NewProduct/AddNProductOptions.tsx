@@ -1,33 +1,53 @@
-import TextField from "@mui/material/TextField";
-import { IProductForm } from "./Interfaces/IProductForm";
-import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
+import React from "react";
+import { useFormContext, useFieldArray, Controller } from "react-hook-form";
+import { IProductForm } from "../Interfaces/IProductForm";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddIcon from "@mui/icons-material/Add";
 
-const EditProductOption = () => {
+import {
+  Grid,
+  Box,
+  Card,
+  CardContent,
+  Avatar,
+  TextField,
+  Button,
+} from "@mui/material";
+
+const AddProductForm = () => {
   const {
     control,
     formState: { errors },
-    watch
-  } = useFormContext();
+    watch,
+  } = useFormContext<IProductForm>();
+  const { fields, append, remove } = useFieldArray<
+    IProductForm,
+    "options",
+    "optionId"
+  >({ control, name: "options", keyName: "optionId" });
 
-  const { fields } = useFieldArray<IProductForm, "options", "option_id">({
-    name: "options",
-    keyName: "option_id",
-  });
-
-  console.log(watch('options'));
   console.log(errors);
-  console.log(errors.options);
+  console.log(watch("options"));
 
   return (
     <>
-      <Grid container spacing={3} justifyContent="center">
-        {fields.map((field, index, errors) => {
-          return (
-            <Grid item xs={12} md={4} key={field.option_id}>
+      <DialogTitle> Add Product Options </DialogTitle>
+      <DialogContent>
+        <Box display="flex" justifyContent="center">
+          <Button
+            startIcon={<AddCircleOutlineIcon />}
+            onClick={() => append({ option_id: fields.length })}
+          >
+            Add
+          </Button>
+        </Box>
+        <Grid container spacing={3} justifyContent="center">
+          {fields.map((option, index) => (
+            <Grid item xs={12} md={4} key={option.optionId}>
               <br />
               <Card elevation={3}>
                 <CardContent>
@@ -38,6 +58,7 @@ const EditProductOption = () => {
                   <Controller
                     name={`options.${index}.option_id`}
                     control={control}
+                    defaultValue={0}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -54,7 +75,8 @@ const EditProductOption = () => {
                   <Controller
                     name={`options.${index}.size`}
                     control={control}
-                    render={({ field, fieldState }) => (
+                    defaultValue={0}
+                    render={({ field, fieldState}) => (
                       <TextField
                         {...field}
                         label="Size"
@@ -70,6 +92,7 @@ const EditProductOption = () => {
                   <Controller
                     name={`options.${index}.price`}
                     control={control}
+                    defaultValue={0}
                     render={({ field, fieldState }) => (
                       <TextField
                         {...field}
@@ -83,12 +106,16 @@ const EditProductOption = () => {
                   />
                 </CardContent>
               </Card>
+              <Button onClick={() => remove(index)}>Remove</Button>
             </Grid>
-          );
-        })}
-      </Grid>
+          ))}
+          <br />
+          <br />
+          <br />
+        </Grid>
+      </DialogContent>
     </>
   );
 };
 
-export default EditProductOption;
+export default AddProductForm;

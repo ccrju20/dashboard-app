@@ -15,13 +15,6 @@ export interface IProductForm {
     }[];
   }
 
-export interface IEditProductOption {
-  formSubmitHandler: SubmitHandler<IProductForm>;
-  productOptions: IProductForm["options"];
-  errors: any;
-  controlProduct: Control<IProductForm, any>;
-}
-
 export interface IAddProductOption {
   option_id: number;
   price: number;

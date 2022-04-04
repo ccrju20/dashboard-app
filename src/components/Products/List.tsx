@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IProducts as Props, Product} from "./Interfaces/IProducts";
-import { closeReason } from './Interfaces/IDialog'
+import { IProducts as Props, Product } from "./Interfaces/IProducts";
+import { closeReason } from "./Interfaces/IDialog";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -16,7 +16,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import Typography from "@mui/material/Typography";
 import EditProduct from "./EditProduct";
-import AddProductOption from './AddProductOptions'
+import AddProductOption from "./AddProductOptions";
 
 const ProductList: React.FC<Props> = ({ products, getProducts }) => {
   const [expanded, setExpanded] = useState({});

@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { IProducts } from "./Interfaces/IProducts";
+import { closeReason } from "./Interfaces/IDialog";
 import axios from "axios";
+import AddProductMain from './NewProduct/AddProductMain'
 import List from "./List";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "@mui/material/Button";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 import Chip from "@mui/material/Chip";
@@ -17,6 +18,15 @@ const Products = () => {
   const [products, setProducts] = useState<IProducts["products"]>([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  const handleAddOpen = (): void => {
+    setOpen(true);
+  };
+
+  const handleAddClose = (value: closeReason): void => {
+    setOpen(false);
+  };
 
   const getProducts = () => {
     axios
@@ -40,15 +50,20 @@ const Products = () => {
 
   return (
     <>
+      <AddProductMain
+        open={open}
+        close={handleAddClose}
+        getProducts={getProducts}
+      />
       <Grid container justifyContent="center">
         <h1>
-          {" "}
-          <CakeOutlinedIcon fontSize="large" /> Products
+          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5 }} />{" "}
+          Products
         </h1>
         <Grid container>
           <Grid item xs={0.5} />
 
-          <Grid item xs={11} >
+          <Grid item xs={11}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <Grid
@@ -59,23 +74,16 @@ const Products = () => {
                 >
                   <Grid item>
                     <Button
-                      onClick={() => console.log("add")}
+                      onClick={() => {
+                        handleAddOpen();
+                        console.log("add");
+                      }}
                       variant="outlined"
                       startIcon={<AddIcon />}
                     >
                       Add
                     </Button>
                   </Grid>
-                  {/* <Grid item>
-                    <Button
-                      onClick={() => console.log("delete")}
-                      size="small"
-                      variant="outlined"
-                      startIcon={<DeleteIcon />}
-                    >
-                      Delete
-                    </Button>
-                  </Grid> */}
                 </Grid>
               </Grid>
               <Grid item xs={12} sm={6}>
