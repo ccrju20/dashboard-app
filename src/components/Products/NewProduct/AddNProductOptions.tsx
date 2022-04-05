@@ -1,13 +1,9 @@
 import React from "react";
 import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import { IProductForm } from "../Interfaces/IProductForm";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import AddIcon from "@mui/icons-material/Add";
-
 import {
   Grid,
   Box,

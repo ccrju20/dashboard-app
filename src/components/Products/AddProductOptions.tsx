@@ -65,6 +65,7 @@ const AddProductOptions: React.FC<Props> = ({
       });
   };
 
+  // Submit Delete Option
   const deleteOption = (optionId: number): void => {
     console.log("confirmed delete");
     close("closeButtonClick");
