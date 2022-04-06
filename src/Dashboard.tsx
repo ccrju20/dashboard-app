@@ -14,8 +14,6 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ListItems from "./MenuDrawer/MenuItems";
-import Divider from "@mui/material/Divider";
-import Orders from "./components/Orders";
 import { Outlet } from "react-router-dom";
 
 function Copyright(props: any) {

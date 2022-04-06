@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainDash from "./MainDash";
-import Orders from "./components/Orders";
+import Orders from "./components/Orders/Orders";
 import Products from "./components/Products/Products";
 import Main from './components/MainPage'
 import Users from './components/Users'
