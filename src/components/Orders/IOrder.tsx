@@ -9,7 +9,7 @@ export interface IOrder {
   status: string;
   delivery: number;
   account: string;
-  orderDetails: IOrderDetails[];
+  orderDetails: IOrderDetails;
   orderItems: IOrderItems[];
 }
 

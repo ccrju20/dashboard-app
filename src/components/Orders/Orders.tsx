@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { Grid, Container, Box, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Container,
+  Box,
+  Button,
+  CircularProgress,
+  ExtendButtonBase,
+  ButtonTypeMap,
+} from "@mui/material";
 import axios from "axios";
-import { IOrder } from "./IOrder";
+import { IOrder, IOrderDetails, IOrderItems } from "./IOrder";
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID", width: 70 },
@@ -43,6 +51,18 @@ const columns: GridColDef[] = [
     width: 300,
     editable: true,
   },
+  {
+    field: "view",
+    headerName: "View",
+    width: 110,
+    renderCell: (params) => {
+      return (
+        <div>
+          <Button onClick={(e) => console.log(params.row)}>view</Button>
+        </div>
+      );
+    },
+  },
   // {
   //   field: "fullName",
   //   headerName: "Full name",
@@ -62,6 +82,9 @@ type OrderRow = {
   status: string;
   delivery: number;
   account: string;
+  orderDetails: IOrderDetails;
+  orderItems: IOrderItems[];
+  view: ExtendButtonBase<ButtonTypeMap<{}, "button">>;
 };
 
 const Orders = () => {
@@ -69,6 +92,7 @@ const Orders = () => {
   const [rows, setRows] = useState([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     axios
@@ -86,6 +110,8 @@ const Orders = () => {
             status: order.status,
             delivery: order.delivery,
             account: order.account,
+            orderDetails: order.orderDetails,
+            orderItems: order.orderItems,
           }))
         );
       })
@@ -97,6 +123,14 @@ const Orders = () => {
         setIsLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    console.log("inside useEffect");
+    const arrOrderNums: string[] = selectedRows.map((o: any) => {
+      return o.orderNumber;
+    });
+    console.log(arrOrderNums);
+  }, [selectedRows]);
 
   return (
     <>
@@ -119,6 +153,14 @@ const Orders = () => {
                   rowsPerPageOptions={[10]}
                   checkboxSelection
                   disableSelectionOnClick
+                  onSelectionModelChange={(ids) => {
+                    const selectedIDs = new Set(ids);
+                    const selectedRowData = rows.filter((row: any) =>
+                      selectedIDs.has(row.id)
+                    );
+                    console.log(selectedRowData);
+                    setSelectedRows(selectedRowData);
+                  }}
                 />
               )}
             </div>
