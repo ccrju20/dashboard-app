@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { object, string, number, array } from "yup";
-import { IDialog as Props } from "./Interfaces/IDialog";
-import { IProductForm } from "./Interfaces/IProductForm";
+import { IDialog as Props } from "../Interfaces/IDialog";
+import { IProductForm } from "../Interfaces/IProductForm";
 import {
   useForm,
   SubmitHandler,
@@ -49,7 +49,7 @@ const EditProduct: React.FC<Props> = ({
   const [notification, setNotification] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState("");
   const [updateError, setUpdateError] = useState(false);
-  const [active, setActive] = useState(product.active);
+  const [active, setActive] = useState(product?.active);
 
   const methods = useForm<IProductForm>({
     resolver: yupResolver(editProductSchema),
@@ -60,7 +60,7 @@ const EditProduct: React.FC<Props> = ({
 
   useEffect(() => {
     methods.reset(product);
-    setActive(product.active);
+    setActive(product?.active);
   }, [product, methods, methods.reset]);
 
 
@@ -81,7 +81,7 @@ const EditProduct: React.FC<Props> = ({
     close("closeButtonClick");
 
     data.options.map((option) => {
-      return Object.assign(option, { product: { id: product.id } });
+      return Object.assign(option, { product: { id: product?.id } });
     });
     console.log(data);
     // make api put call
@@ -110,9 +110,9 @@ const EditProduct: React.FC<Props> = ({
             <DialogTitle>
               <Grid container justifyContent="center">
                 <Grid item xs={12} sm={6}>
-                  <EditTwoToneIcon /> {product.title} (Edit)
+                  <EditTwoToneIcon /> {product?.title} (Edit)
                   <DialogContentText ml={4}>
-                    Product ID: {product.id}
+                    Product ID: {product?.id}
                   </DialogContentText>
                 </Grid>
 
@@ -180,7 +180,7 @@ const EditProduct: React.FC<Props> = ({
             <CardMedia
               component="img"
               height="240"
-              image={product.img}
+              image={product?.img}
               alt="product"
             />
             <DialogContent>

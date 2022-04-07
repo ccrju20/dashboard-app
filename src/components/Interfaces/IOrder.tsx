@@ -1,5 +1,5 @@
-import { Product } from "../Products/Interfaces/IProducts";
-import { IAddProductOption } from "../Products/Interfaces/IProductForm";
+import { Product } from "./IProducts";
+import { IAddProductOption } from "./IProductForm";
 
 export interface IOrder {
   id: number;
@@ -13,17 +13,17 @@ export interface IOrder {
   orderItems: IOrderItems[];
 }
 
-export interface IOrderDetails {
-  address: string;
-  addresstwo: string;
-  city: string;
-  email: string;
-  firstname: string;
+export interface IOrderDetails {  
   id: number;
-  lastname: string;
+  email: string;  
+  firstname: string;  
+  lastname: string; 
   phone: string;
-  postal: string;
-  state: string;
+  address?: string;
+  addresstwo?: string;
+  city?: string;  
+  state?: string;
+  postal?: string;
 }
 
 export interface IOrderItems {

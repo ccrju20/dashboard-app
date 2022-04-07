@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { IDialog as Props } from "./Interfaces/IDialog";
-import { IAddProductOption } from './Interfaces/IProductForm'
+import { IDialog as Props } from "../Interfaces/IDialog";
+import { IAddProductOption } from '../Interfaces/IProductForm'
 import { SchemaOf, object, number} from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
@@ -52,7 +52,7 @@ const AddProductOptions: React.FC<Props> = ({
     option: IAddProductOption
   ) => {
     close("closeButtonClick");
-    Object.assign(option, { product: { id: product.id } });
+    Object.assign(option, { product: { id: product?.id } });
     console.log(option);
     axios
       .post(PRODUCT_OPTIONS_API_URL, option)
@@ -109,7 +109,7 @@ const AddProductOptions: React.FC<Props> = ({
             <Grid item xs={12}>
               <Grid container justifyContent="center">
                 <DialogTitle>
-                  Add or Delete Option for Product ID {product.id}
+                  Add or Delete Option for Product ID {product?.id}
                 </DialogTitle>
               </Grid>
             </Grid>
@@ -117,7 +117,7 @@ const AddProductOptions: React.FC<Props> = ({
               <DialogContent>
                 <DialogContentText>Current Options:</DialogContentText>
                 <List>
-                  {product.options?.map((option, index) => {
+                  {product?.options?.map((option, index) => {
                     return (
                       <div key={index}>
                         <ListItem>

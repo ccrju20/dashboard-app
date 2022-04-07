@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
-import { IProductForm } from "../Interfaces/IProductForm";
+import { IProductForm } from "../../Interfaces/IProductForm";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";

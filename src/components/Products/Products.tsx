@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { IProducts } from "./Interfaces/IProducts";
-import { closeReason } from "./Interfaces/IDialog";
+import { IProducts } from "../Interfaces/IProducts";
+import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import AddProductMain from './NewProduct/AddProductMain'
 import List from "./List";

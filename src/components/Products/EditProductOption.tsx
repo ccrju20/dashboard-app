@@ -1,5 +1,5 @@
 import TextField from "@mui/material/TextField";
-import { IProductForm } from "./Interfaces/IProductForm";
+import { IProductForm } from "../Interfaces/IProductForm";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";

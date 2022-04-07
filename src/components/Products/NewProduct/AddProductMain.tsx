@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { IAddProductOption, IProductForm } from "../Interfaces/IProductForm";
-import { IDialogAdd as Props } from "../Interfaces/IDialog";
+import { IAddProductOption, IProductForm } from "../../Interfaces/IProductForm";
+import { IDialog as Props } from "../../Interfaces/IDialog";
 import { object, string, number, array, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";

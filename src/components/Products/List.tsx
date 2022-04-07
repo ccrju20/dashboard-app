@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { IProducts as Props, Product } from "./Interfaces/IProducts";
-import { closeReason } from "./Interfaces/IDialog";
+import { IProducts as Props, Product } from "../Interfaces/IProducts";
+import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import { Grid, Box, Button, Typography, CardActionArea } from "@mui/material";
 import Container from "@mui/material/Container";
