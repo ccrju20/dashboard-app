@@ -6,60 +6,125 @@ import {
   Box,
   Button,
   CircularProgress,
-  ExtendButtonBase,
-  ButtonTypeMap,
+  Chip,
 } from "@mui/material";
 import axios from "axios";
 import { IOrder, IOrderDetails, IOrderItems } from "./IOrder";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 70 },
+  { field: "id", headerName: "ID", width: 60 },
   {
     field: "orderNumber",
     headerName: "Order Number",
-    width: 150,
+    width: 125,
+    renderCell: (params) => {
+      return (
+        <div>
+          <Button variant="text" onClick={() => console.log(params.row)}>
+            {params.row.orderNumber}
+          </Button>
+        </div>
+      );
+    },
+  },
+  {
+    field: "status",
+    headerName: "Status",
+    width: 120,
     editable: true,
+    renderCell: (params) => {
+      const handleColor = (status: any) => {
+        switch (status) {
+          case "PENDING":
+            return "primary";
+          case "SHIPPED":
+            return "warning";
+          case "COMPLETE":
+            return "success";
+          case "CANCELED":
+            return "error";
+          case "REFUNDED":
+            return "error";
+        }
+      };
+      return (
+        <>
+          <Chip
+            label={params.row.status}
+            color={handleColor(params.row.status)}
+            // color={params.row.status === "COMPLETE" ? "success" : "primary"}
+            variant="outlined"
+            onClick={() => {
+              console.log("status change");
+            }}
+          />
+        </>
+      );
+    },
   },
   {
     field: "datePosted",
     headerName: "Date Posted",
     width: 220,
-    editable: true,
   },
   {
     field: "scheduled",
     headerName: "Scheduled",
-    width: 175,
+    width: 180,
     editable: true,
-  },
-  {
-    field: "status",
-    headerName: "Status",
-    width: 110,
-    editable: true,
+    renderCell: (params) => {
+      return (
+        <>
+          <Chip
+            label={params.row.scheduled}
+            variant="outlined"
+            color={params.row.scheduled === "ASAP" ? "warning" : "secondary"}
+          />
+        </>
+      );
+    },
   },
   {
     field: "delivery",
-    headerName: "Delivery",
+    headerName: "Method",
     type: "number",
-    width: 90,
+    width: 120,
     editable: true,
+    renderCell: (params) => {
+      return (
+        <>
+          {params.row.delivery === 0 ? (
+            <Chip
+              variant="outlined"
+              color="success"
+              label="Pickup"
+              icon={<StorefrontIcon />}
+            />
+          ) : (
+            <Chip
+              variant="outlined"
+              color="warning"
+              label="Delivery"
+              icon={<DirectionsCarOutlinedIcon />}
+            />
+          )}
+        </>
+      );
+    },
   },
   {
     field: "account",
     headerName: "Account",
-    width: 300,
-    editable: true,
-  },
-  {
-    field: "view",
-    headerName: "View",
-    width: 110,
+    width: 290,
     renderCell: (params) => {
       return (
-        <div>
-          <Button onClick={(e) => console.log(params.row)}>view</Button>
-        </div>
+        <Grid container justifyContent="center">
+          {params.row.account === "00000000-0000-0000-0000-000000000000"
+            ? "Guest"
+            : params.row.account}
+        </Grid>
       );
     },
   },
@@ -84,15 +149,14 @@ type OrderRow = {
   account: string;
   orderDetails: IOrderDetails;
   orderItems: IOrderItems[];
-  view: ExtendButtonBase<ButtonTypeMap<{}, "button">>;
 };
 
 const Orders = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<OrderRow[]>([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedRows, setSelectedRows] = useState([]);
+  const [selectedRows, setSelectedRows] = useState<OrderRow[]>([]);
 
   useEffect(() => {
     axios
@@ -125,7 +189,6 @@ const Orders = () => {
   }, []);
 
   useEffect(() => {
-    console.log("inside useEffect");
     const arrOrderNums: string[] = selectedRows.map((o: any) => {
       return o.orderNumber;
     });
@@ -160,6 +223,15 @@ const Orders = () => {
                     );
                     console.log(selectedRowData);
                     setSelectedRows(selectedRowData);
+                  }}
+                  sx={{
+                    "& .MuiDataGrid-virtualScrollerRenderZone": {
+                      "& .MuiDataGrid-row": {
+                        "&:nth-of-type(2n)": {
+                          backgroundColor: "rgba(235, 235, 235, .7)",
+                        },
+                      },
+                    },
                   }}
                 />
               )}
