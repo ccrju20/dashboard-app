@@ -10,6 +10,7 @@ import {
   Chip,
   Typography,
   Avatar,
+  Button,
 } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -17,7 +18,7 @@ import Divider from "@mui/material/Divider";
 import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 
-const OrderInfo: React.FC<Props> = ({ open, close, order }) => {
+const OrderInfo: React.FC<Props> = ({ open, close, order, getOrders }) => {
   return (
     <>
       <Dialog open={open} onClose={close} maxWidth="md" fullWidth={true}>
@@ -135,6 +136,15 @@ const OrderInfo: React.FC<Props> = ({ open, close, order }) => {
             </DialogContent>
           </Grid>
         </Grid>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              close("closeButtonClick");
+            }}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   );

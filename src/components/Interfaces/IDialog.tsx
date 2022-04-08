@@ -16,5 +16,9 @@ export interface IDialog {
 export interface IDialogOrder {
   open: boolean;
   close: (reason: closeReason) => void;
-  order: IOrder
+  order: IOrder;
+  orderNumbers?: string[];
+  getOrders: () => void;
+  setSelectionModel?: React.Dispatch<React.SetStateAction<any[]>>;
+  setSelectedRows?: React.Dispatch<React.SetStateAction<IOrder[]>>
 }

@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+} from "@mui/x-data-grid";
 import {
   Grid,
   Container,
@@ -12,6 +15,7 @@ import axios from "axios";
 import { closeReason } from "../Interfaces/IDialog";
 import { IOrder } from "../Interfaces/IOrder";
 import OrderInfo from "./OrderInfo";
+import OrderStatus from "./OrderStatus";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 
@@ -20,20 +24,15 @@ const Orders = () => {
   const [rows, setRows] = useState<IOrder[]>([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedRows, setSelectedRows] = useState<IOrder[]>([]);
-  const [open, setOpen] = useState(false);
+  const [orderOpen, setOrderOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<IOrder>({} as any);
+  const [statusOpen, setStatusOpen] = useState(false);
+  const [arrOrderNums, setArrOrderNums] = useState<string[]>([]);
+  const [selectedOrders, setSelectedOrders] = useState(false);
+  const [selectedRows, setSelectedRows] = useState<IOrder[]>([]);
+  const [selectionModel, setSelectionModel] = useState<any[]>([]);
 
-  const handleEditOpen = (order: IOrder): void => {
-    setSelectedOrder(order);
-    setOpen(true);
-  };
-
-  const handleEditClose = (value: closeReason): void => {
-    setOpen(false);
-  };
-
-  useEffect(() => {
+  const getOrders = () => {
     axios
       .get("api/v1/orders")
       .then((res) => {
@@ -61,14 +60,45 @@ const Orders = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, []);
+  };
 
   useEffect(() => {
-    const arrOrderNums: string[] = selectedRows.map((o: any) => {
-      return o.ordernumber;
-    });
-    console.log(arrOrderNums);
-  }, [selectedRows]);
+    getOrders();
+  }, []);
+
+  const handleOrderOpen = (order: IOrder): void => {
+    setSelectedOrder(order);
+    setOrderOpen(true);
+  };
+
+  const handleOrderClose = (value: closeReason): void => {
+    setOrderOpen(false);
+  };
+
+  const handleStatusOpen = (order: IOrder): void => {
+    setSelectedOrder(order);
+    setStatusOpen(true);
+  };
+
+  const handleStatusClose = (value: closeReason): void => {
+    setStatusOpen(false);
+  };
+
+  useEffect(() => {
+    setSelectedOrders(selectionModel.length === 0);
+    setArrOrderNums(
+      selectedRows.map((o: any) => {
+        return o.ordernumber;
+      })
+    );
+  }, [selectedRows, selectionModel]);
+
+  console.log(arrOrderNums);
+
+  const handleSelectedOrders = (ids: any) => {
+    const selectedIDs = new Set(ids);
+    setSelectedRows(rows.filter((row: any) => selectedIDs.has(row.id)));
+  };
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 60 },
@@ -82,7 +112,7 @@ const Orders = () => {
             <Button
               variant="text"
               onClick={() => {
-                handleEditOpen(params.row);
+                handleOrderOpen(params.row);
                 console.log(params.row);
               }}
             >
@@ -101,9 +131,11 @@ const Orders = () => {
         const handleColor = (status: any) => {
           switch (status) {
             case "PENDING":
+              return "warning";
+            case "CONFIRMED":
               return "primary";
             case "SHIPPED":
-              return "warning";
+              return "secondary";
             case "COMPLETE":
               return "success";
             case "CANCELED":
@@ -120,6 +152,7 @@ const Orders = () => {
               size="small"
               onClick={() => {
                 console.log("status change");
+                handleStatusOpen(params.row);
               }}
             />
           </>
@@ -139,11 +172,15 @@ const Orders = () => {
       renderCell: (params) => {
         return (
           <>
-            <Chip
-              label={params.row.scheduled}
-              variant="outlined"
-              color={params.row.scheduled === "ASAP" ? "warning" : "secondary"}
-            />
+            <Grid container justifyContent="center">
+              <Chip
+                label={params.row.scheduled}
+                variant="outlined"
+                color={
+                  params.row.scheduled === "ASAP" ? "warning" : "secondary"
+                }
+              />
+            </Grid>
           </>
         );
       },
@@ -167,7 +204,7 @@ const Orders = () => {
             ) : (
               <Chip
                 variant="outlined"
-                color="warning"
+                color="info"
                 label="Delivery"
                 icon={<DirectionsCarOutlinedIcon />}
               />
@@ -194,9 +231,31 @@ const Orders = () => {
 
   return (
     <>
-      <OrderInfo open={open} close={handleEditClose} order={selectedOrder} />
+      <OrderInfo
+        open={orderOpen}
+        close={handleOrderClose}
+        order={selectedOrder}
+        getOrders={getOrders}
+      />
+      <OrderStatus
+        open={statusOpen}
+        close={handleStatusClose}
+        order={selectedOrder}
+        orderNumbers={arrOrderNums}
+        getOrders={getOrders}
+        setSelectedRows={setSelectedRows}
+        setSelectionModel={setSelectionModel}
+      />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <h1>Orders</h1>
+        <Button
+          disabled={selectedOrders}
+          onClick={() => {
+            setStatusOpen(true);
+          }}
+        >
+          Change Status for Selected Orders
+        </Button>
         <Grid container justifyContent="center">
           {isLoading && !loadError ? (
             <Box sx={{ display: "flex" }}>
@@ -214,14 +273,11 @@ const Orders = () => {
                   rowsPerPageOptions={[10]}
                   checkboxSelection
                   disableSelectionOnClick
-                  onSelectionModelChange={(ids) => {
-                    const selectedIDs = new Set(ids);
-                    const selectedRowData: IOrder[] = rows.filter((row: any) =>
-                      selectedIDs.has(row.id)
-                    );
-                    console.log(selectedRowData);
-                    setSelectedRows(selectedRowData);
+                  onSelectionModelChange={(newSelection) => {
+                    setSelectionModel(newSelection);
+                    handleSelectedOrders(newSelection);
                   }}
+                  selectionModel={selectionModel}
                   sx={{
                     "& .MuiDataGrid-virtualScrollerRenderZone": {
                       "& .MuiDataGrid-row": {
