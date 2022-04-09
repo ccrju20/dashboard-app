@@ -14,7 +14,7 @@ const MenuItems = () => {
   return (
     <React.Fragment>
       <ListItemButton
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
         onClick={() => {
           navigate("/");
         }}
@@ -26,7 +26,7 @@ const MenuItems = () => {
       </ListItemButton>
 
       <ListItemButton
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
         onClick={() => {
           navigate("/products");
         }}
@@ -38,7 +38,7 @@ const MenuItems = () => {
       </ListItemButton>
 
       <ListItemButton
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
         onClick={() => {
           navigate("/orders");
         }}
@@ -50,7 +50,7 @@ const MenuItems = () => {
       </ListItemButton>
 
       <ListItemButton
-        sx={{ marginBottom: 2 }}
+        sx={{ marginBottom: 1 }}
         onClick={() => {
           navigate("/users");
         }}
