@@ -1,4 +1,5 @@
 import { Product, IProducts } from "./IProducts";
+import { IOrder } from './IOrder'
 
 export type closeReason =
   | "backdropClick"
@@ -8,12 +9,16 @@ export type closeReason =
 export interface IDialog {
   open: boolean;
   close: (reason: closeReason) => void;
-  product: Product;
+  product?: Product;
   getProducts: IProducts["getProducts"];
 }
 
-export interface IDialogAdd {
+export interface IDialogOrder {
   open: boolean;
   close: (reason: closeReason) => void;
-  getProducts: IProducts["getProducts"];
+  order: IOrder;
+  orderNumbers?: string[];
+  getOrders: () => void;
+  setSelectionModel?: React.Dispatch<React.SetStateAction<any[]>>;
+  setSelectedRows?: React.Dispatch<React.SetStateAction<IOrder[]>>
 }

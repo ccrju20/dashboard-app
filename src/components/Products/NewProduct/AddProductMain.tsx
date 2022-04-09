@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { IAddProductOption, IProductForm } from "../Interfaces/IProductForm";
-import { IDialogAdd as Props } from "../Interfaces/IDialog";
+import React, { useState } from "react";
+import { IAddProductOption, IProductForm } from "../../Interfaces/IProductForm";
+import { IDialog as Props } from "../../Interfaces/IDialog";
 import { object, string, number, array, SchemaOf } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm, FormProvider } from "react-hook-form";
 import axios from "axios";
-import { Grid, Button, Divider } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import AddProductForm from "./AddProductForm";
 import AddNProductOptions from "./AddNProductOptions";
-import { ResetTv } from "@mui/icons-material";
+import Notification from "../Notification";
 
 const productOptionSchema: SchemaOf<IAddProductOption> = object({
   option_id: number()
@@ -37,21 +37,37 @@ const AddProductMain: React.FC<Props> = ({ open, close, getProducts }) => {
   const methods = useForm<IProductForm>({
     resolver: yupResolver(productSchema),
   });
+  const [notification, setNotification] = useState(false);
+  const [notificationMsg, setNotificationMsg] = useState("");
+  const [updateError, setUpdateError] = useState(false);
 
   const submitProduct: SubmitHandler<IProductForm> = (data: IProductForm) => {
     console.log(data);
     close("closeButtonClick");
-    methods.reset({...data});
 
     axios
       .post("api/v1/products", data)
       .then((res) => {
         console.log(res);
+        setNotificationMsg(`Product ID: ${res.data.id} - Added Successfully!`);
+        setNotification(true);
         getProducts();
       })
       .catch((err) => {
         console.log(err);
+        setUpdateError(true);
+        setNotificationMsg(err.message);
       });
+  };
+
+  const handleCloseNotification = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setNotification(false);
   };
 
   return (
@@ -77,6 +93,12 @@ const AddProductMain: React.FC<Props> = ({ open, close, getProducts }) => {
           </form>
         </FormProvider>
       </Dialog>
+      <Notification
+        open={notification}
+        close={handleCloseNotification}
+        severity={!updateError ? "success" : "error"}
+        message={notificationMsg}
+      />
     </>
   );
 };

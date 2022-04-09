@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { IProducts } from "./Interfaces/IProducts";
-import { closeReason } from "./Interfaces/IDialog";
+import { IProducts } from "../Interfaces/IProducts";
+import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import AddProductMain from './NewProduct/AddProductMain'
 import List from "./List";
@@ -57,7 +57,7 @@ const Products = () => {
       />
       <Grid container justifyContent="center">
         <h1>
-          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5 }} />{" "}
+          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5, marginRight: 1 }} />
           Products
         </h1>
         <Grid container>
