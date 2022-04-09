@@ -57,7 +57,7 @@ const Products = () => {
       />
       <Grid container justifyContent="center">
         <h1>
-          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5 }} />{" "}
+          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5, marginRight: 1 }} />
           Products
         </h1>
         <Grid container>

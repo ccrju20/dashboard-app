@@ -28,7 +28,6 @@ const OrderStatus: React.FC<Props> = ({
 
   useEffect(() => {
     if (orderNumbers && orderNumbers.length > 0) {
-      console.log(`more than 1 order to be changed`);
       setIsSingleOrder(false);
     } else {
       setIsSingleOrder(true);
@@ -36,7 +35,6 @@ const OrderStatus: React.FC<Props> = ({
   }, [orderNumbers]);
 
   const changeStatus = (orders: string | string[], status: string): void => {
-    console.log(`${orders}: ${status}`);
     close("closeButtonClick");
 
     axios
@@ -48,11 +46,11 @@ const OrderStatus: React.FC<Props> = ({
       )
       .then((res) => {
         console.log(res);
-        getOrders();
         if (setSelectionModel && setSelectedRows && !isSingleOrder) {
           setSelectionModel([]);
           setSelectedRows([]);
         }
+        getOrders();
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +67,27 @@ const OrderStatus: React.FC<Props> = ({
               justifyContent="center"
               sx={{ backgroundColor: "#00152B", color: "lightgrey" }}
             >
-              <DialogTitle>Change Status for {order.ordernumber}</DialogTitle>
+              {isSingleOrder ? (
+                <DialogTitle>Change Status for {order.ordernumber}</DialogTitle>
+              ) : (
+                <>
+                  <DialogTitle>
+                    Change Statuses for Orders:
+                    {orderNumbers?.map((order, index) => {
+                      return (
+                        <div key={index}>
+                          <DialogContentText
+                            align="center"
+                            sx={{ color: "inherit" }}
+                          >
+                            {order}
+                          </DialogContentText>
+                        </div>
+                      );
+                    })}
+                  </DialogTitle>
+                </>
+              )}
             </Grid>
           </Grid>
         </Grid>

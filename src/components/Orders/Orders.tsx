@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {
   Grid,
   Container,
@@ -18,6 +15,7 @@ import OrderInfo from "./OrderInfo";
 import OrderStatus from "./OrderStatus";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
+import ShoppingBasketIconOutlined from "@mui/icons-material/ShoppingBasketOutlined";
 
 const Orders = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -247,15 +245,36 @@ const Orders = () => {
         setSelectionModel={setSelectionModel}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <h1>Orders</h1>
-        <Button
-          disabled={selectedOrders}
-          onClick={() => {
-            setStatusOpen(true);
-          }}
-        >
-          Change Status for Selected Orders
-        </Button>
+        <h1>
+          <ShoppingBasketIconOutlined fontSize="large" sx={{ marginBottom: -0.5, marginRight: 1 }} />
+          Orders
+        </h1>
+        <Grid container mb={3} spacing={1}>
+          <Grid item xs={12} sm={6}>
+            <Grid container justifyContent={{ xs: "center", sm: "flex-start" }}>
+              <Button
+                disabled={selectedOrders}
+                variant="outlined"
+                onClick={() => {
+                  setStatusOpen(true);
+                }}
+              >
+                Change Statuses
+              </Button>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Grid container justifyContent={{ xs: "center", sm: "flex-end" }}>
+              <Chip
+                label={`Orders Pending: ${
+                  orders.filter((order) => order.status === "PENDING").length
+                }`}
+                color="primary"
+                variant="outlined"
+              />
+            </Grid>
+          </Grid>
+        </Grid>
         <Grid container justifyContent="center">
           {isLoading && !loadError ? (
             <Box sx={{ display: "flex" }}>
