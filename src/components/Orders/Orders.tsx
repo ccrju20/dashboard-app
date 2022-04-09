@@ -26,7 +26,7 @@ const Orders = () => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder>({} as any);
   const [statusOpen, setStatusOpen] = useState(false);
   const [arrOrderNums, setArrOrderNums] = useState<string[]>([]);
-  const [selectedOrders, setSelectedOrders] = useState(false);
+  const [ordersSelected, setOrdersSelected] = useState(false);
   const [selectedRows, setSelectedRows] = useState<IOrder[]>([]);
   const [selectionModel, setSelectionModel] = useState<any[]>([]);
 
@@ -74,6 +74,9 @@ const Orders = () => {
   };
 
   const handleStatusOpen = (order: IOrder): void => {
+    if (ordersSelected) {
+      return;
+    }
     setSelectedOrder(order);
     setStatusOpen(true);
   };
@@ -83,7 +86,7 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    setSelectedOrders(selectionModel.length === 0);
+    setOrdersSelected(selectionModel.length != 0);
     setArrOrderNums(
       selectedRows.map((o: any) => {
         return o.ordernumber;
@@ -149,7 +152,6 @@ const Orders = () => {
               color={handleColor(params.row.status)}
               size="small"
               onClick={() => {
-                console.log("status change");
                 handleStatusOpen(params.row);
               }}
             />
@@ -246,14 +248,17 @@ const Orders = () => {
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <h1>
-          <ShoppingBasketIconOutlined fontSize="large" sx={{ marginBottom: -0.5, marginRight: 1 }} />
+          <ShoppingBasketIconOutlined
+            fontSize="large"
+            sx={{ marginBottom: -0.5, marginRight: 1 }}
+          />
           Orders
         </h1>
         <Grid container mb={3} spacing={1}>
           <Grid item xs={12} sm={6}>
             <Grid container justifyContent={{ xs: "center", sm: "flex-start" }}>
               <Button
-                disabled={selectedOrders}
+                disabled={!ordersSelected}
                 variant="outlined"
                 onClick={() => {
                   setStatusOpen(true);
