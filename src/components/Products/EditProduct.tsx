@@ -10,16 +10,20 @@ import {
 } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { Grid, Box, Divider } from "@mui/material";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import {
+  Grid,
+  Box,
+  Divider,
+  Button,
+  TextField,
+  Switch,
+  CardMedia,
+} from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import CardMedia from "@mui/material/CardMedia";
-import Switch from "@mui/material/Switch";
 import Notification from "./Notification";
 import EditProductOption from "./EditProductOption";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
@@ -45,7 +49,6 @@ const EditProduct: React.FC<Props> = ({
   product,
   getProducts,
 }) => {
-
   const [notification, setNotification] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState("");
   const [updateError, setUpdateError] = useState(false);
@@ -62,7 +65,6 @@ const EditProduct: React.FC<Props> = ({
     methods.reset(product);
     setActive(product?.active);
   }, [product, methods, methods.reset]);
-
 
   const handleCloseNotification = (
     event?: React.SyntheticEvent | Event,
@@ -84,7 +86,7 @@ const EditProduct: React.FC<Props> = ({
       return Object.assign(option, { product: { id: product?.id } });
     });
     console.log(data);
-    // make api put call
+
     axios
       .put("api/v1/products", data)
       .then((res) => {
@@ -167,7 +169,6 @@ const EditProduct: React.FC<Props> = ({
                     <Switch
                       checked={active === 1}
                       onChange={(event, value) => {
-                        console.log(value);
                         onChange(value ? 1 : 0);
                         value ? setActive(1) : setActive(0);
                       }}
@@ -229,7 +230,7 @@ const EditProduct: React.FC<Props> = ({
             <Divider />
             <DialogTitle> Edit Product Options </DialogTitle>
             <DialogContent>
-              <EditProductOption/>
+              <EditProductOption />
             </DialogContent>
             <br />
             <DialogActions>

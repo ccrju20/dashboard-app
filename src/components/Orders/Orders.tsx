@@ -86,15 +86,13 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    setOrdersSelected(selectionModel.length != 0);
+    setOrdersSelected(selectionModel.length !== 0);
     setArrOrderNums(
       selectedRows.map((o: any) => {
         return o.ordernumber;
       })
     );
   }, [selectedRows, selectionModel]);
-
-  console.log(arrOrderNums);
 
   const handleSelectedOrders = (ids: any) => {
     const selectedIDs = new Set(ids);

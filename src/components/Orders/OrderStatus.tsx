@@ -4,12 +4,8 @@ import axios from "axios";
 import {
   Grid,
   Dialog,
-  DialogContent,
   DialogContentText,
   DialogTitle,
-  Chip,
-  Typography,
-  Avatar,
   Button,
 } from "@mui/material";
 
@@ -23,9 +19,7 @@ const OrderStatus: React.FC<Props> = ({
   setSelectedRows,
 }) => {
   const [isSingleOrder, setIsSingleOrder] = useState<boolean>(true);
-
-  const ORDER_STATUS_CHANGE_API_URL = "api/v1/orders/";
-
+  
   useEffect(() => {
     if (orderNumbers && orderNumbers.length > 0) {
       setIsSingleOrder(false);

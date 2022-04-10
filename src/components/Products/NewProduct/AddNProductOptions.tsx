@@ -1,8 +1,6 @@
 import React from "react";
 import { useFormContext, useFieldArray, Controller } from "react-hook-form";
 import { IProductForm } from "../../Interfaces/IProductForm";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import {
   Grid,
@@ -12,13 +10,15 @@ import {
   Avatar,
   TextField,
   Button,
+  DialogContent,
+  DialogTitle
 } from "@mui/material";
 
 const AddProductForm = () => {
   const {
     control,
-    formState: { errors },
-    watch,
+    // formState: { errors },
+    // watch,
   } = useFormContext<IProductForm>();
   const { fields, append, remove } = useFieldArray<
     IProductForm,
@@ -26,8 +26,8 @@ const AddProductForm = () => {
     "optionId"
   >({ control, name: "options", keyName: "optionId" });
 
-  console.log(errors);
-  console.log(watch("options"));
+  // console.log(errors);
+  // console.log(watch("options"));
 
   return (
     <>
