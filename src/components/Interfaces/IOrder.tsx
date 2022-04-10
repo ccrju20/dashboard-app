@@ -13,7 +13,7 @@ export interface IOrder {
   orderItems: OrderItems[];
 }
 
-type OrderDetails = {  
+interface OrderDetails {  
   id: number;
   email: string;  
   firstname: string;  
@@ -26,7 +26,7 @@ type OrderDetails = {
   postal?: string;
 }
 
-type OrderItems = {
+interface OrderItems {
   id: number;
   product: Product;
   productOption: IAddProductOption;
