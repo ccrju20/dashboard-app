@@ -215,6 +215,7 @@ const Orders = () => {
       field: "account",
       headerName: "Account",
       width: 290,
+      headerAlign: "center",
       renderCell: (params) => {
         return (
           <Grid container justifyContent="center">
