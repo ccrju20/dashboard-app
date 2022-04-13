@@ -1,21 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { closeReason } from "../Interfaces/IDialog";
 import { IUser } from "../Interfaces/IUser";
+import { IOrder } from "../Interfaces/IOrder";
 import {
   Grid,
   Container,
   Box,
   Button,
   CircularProgress,
-  Chip,
+  Typography,
+  Avatar,
 } from "@mui/material";
 import axios from "axios";
+import UserInfo from "./UserInfo";
+import UserOrders from "./UserOrders";
 
 const Users = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const [rows, setRows] = useState<IUser[]>([]);
   const [loadError, setLoadError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [userOpen, setUserOpen] = useState(false);
+  const [userOrdersOpen, setUserOrdersOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<IUser>({} as any);
+  const [userOrders, setUserOrders] = useState<IOrder[]>([]);
 
   const getUsers = () => {
     axios
@@ -47,12 +56,57 @@ const Users = () => {
     getUsers();
   }, []);
 
+  const handleUserOpen = (user: IUser): void => {
+    setSelectedUser(user);
+    setUserOpen(true);
+  };
+
+  const handleUserClose = (value: closeReason): void => {
+    setUserOpen(false);
+  };
+
+  const handleUserOrdersOpen = (user: IUser): void => {
+    axios.get(`api/v1/orders/account/${user.uuid}`).then((res) => {
+      console.log(res);
+      setUserOrders(res.data);
+    });
+
+    setSelectedUser(user);
+    setUserOrdersOpen(true);
+  };
+  const handleUserOrdersClose = (value: closeReason): void => {
+    setUserOrdersOpen(false);
+  };
+
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 60 },
+    {
+      field: "id",
+      headerName: "",
+      width: 90,
+      renderCell: (params) => {
+        const userInitials = `${params.row.contactInfo.firstname.charAt(
+          0
+        )}${params.row.contactInfo.lastname.charAt(0)}`;
+        return (
+          <Grid container justifyContent="center">
+            <Avatar sx={{ width: 30, height: 30 }}>
+              <Typography variant="body2"> {userInitials}</Typography>
+            </Avatar>
+          </Grid>
+        );
+      },
+    },
     {
       field: "email",
-      headerName: "Email",
-      width: 200,
+      headerName: "Account",
+      width: 190,
+      renderCell: (params) => {
+        return (
+          <Typography variant="body2" color="primary.main">
+            {params.row.email}
+          </Typography>
+        );
+      },
     },
     {
       field: "uuid",
@@ -67,13 +121,13 @@ const Users = () => {
     {
       field: "contactInfo",
       headerName: "Contact Info",
-      width: 170,
+      width: 160,
       renderCell: (params) => {
         return (
           <Grid container justifyContent="center">
             <Button
               onClick={() => {
-                console.log(params.row.contactInfo);
+                handleUserOpen(params.row);
               }}
             >
               View Info
@@ -88,19 +142,26 @@ const Users = () => {
       width: 200,
       renderCell: (params) => {
         return (
-            <Button
-              onClick={() => {
-                console.log(params.row.uuid);
-              }}
-            >
-              Orders
-            </Button>
+          <Button
+            onClick={() => {
+              handleUserOrdersOpen(params.row);
+            }}
+          >
+            Orders
+          </Button>
         );
       },
     },
   ];
   return (
     <>
+      <UserInfo open={userOpen} close={handleUserClose} user={selectedUser} />
+      <UserOrders
+        open={userOrdersOpen}
+        close={handleUserOrdersClose}
+        user={selectedUser}
+        userOrders={userOrders}
+      />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <h1>Users</h1>
 

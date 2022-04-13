@@ -6,7 +6,7 @@ export interface IUser {
   contactInfo: IContactInfo;
 }
 
-interface IContactInfo {
+export interface IContactInfo {
   id: number;
   firstname: string;
   lastname: string;
