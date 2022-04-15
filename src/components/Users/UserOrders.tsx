@@ -12,6 +12,9 @@ import {
   Avatar,
   ListItemText,
   DialogActions,
+  Typography,
+  Divider,
+  Box,
 } from "@mui/material";
 
 const UserOrders: React.FC<Props> = ({ open, close, user, userOrders }) => {
@@ -26,7 +29,8 @@ const UserOrders: React.FC<Props> = ({ open, close, user, userOrders }) => {
               sx={{ backgroundColor: "#00152B", color: "lightgrey" }}
             >
               <DialogTitle>
-                {user.contactInfo?.firstname} {user.contactInfo?.lastname}'s Orders
+                {user.contactInfo?.firstname} {user.contactInfo?.lastname}'s
+                Orders
               </DialogTitle>
             </Grid>
           </Grid>
@@ -38,26 +42,62 @@ const UserOrders: React.FC<Props> = ({ open, close, user, userOrders }) => {
                 <List>
                   {userOrders?.map((order, index) => {
                     return (
-                      <ListItem key={order.id}>
-                        <ListItemAvatar>
-                          <Avatar alt="product">{index + 1}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={
-                            <>
-                              Order #{`${order.ordernumber}`}
-                              <br />
-                              Date Posted: {`${order.dateposted}`}
-                              <br />
-                              Is Delivery: {`${order.delivery}`}
-                              <br />
-                              Scheduled: {`${order.scheduled}`}
-                              <br />
-                              Status: {`${order.status}`}
-                            </>
-                          }
-                        />
-                      </ListItem>
+                      <div key={order.id}>
+                        <ListItem>
+                          <ListItemAvatar>
+                            <Avatar
+                              alt="product"
+                              sx={{ height: 30, width: 30, marginTop: -5 }}
+                            >
+                              <Typography variant="body2">
+                                {index + 1}
+                              </Typography>
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={
+                              <Typography variant="overline">
+                                Order #{`${order.ordernumber}`}
+                                <br />
+                                Placed: {`${order.dateposted}`}
+                                <br />
+                                {order.delivery === 1 ? " Delivery" : " Pickup"}
+                                <br />
+                                Scheduled: {`${order.scheduled}`}
+                                <br />
+                                Status: {`${order.status}`}
+                              </Typography>
+                            }
+                            secondary={
+                              <>
+                                <br />
+                                {order.orderItems?.map((item, index) => {
+                                  return (
+                                    <Typography
+                                      key={item.id}
+                                      sx={{ display: "inline" }}
+                                      component="span"
+                                      variant="caption"
+                                      color="text.secondary"
+                                    >
+                                      {`${index + 1}. ${item.product.title} /
+                                      $${item.productOption.price} / qty:
+                                      ${item.quantity} / total price:
+                                      $${item.total_price}`}
+                                      {<br />}
+                                    </Typography>
+                                  );
+                                })}
+                              </>
+                            }
+                          />
+                        </ListItem>
+                        {index !== userOrders.length - 1 && (
+                          <>
+                            <br /> <Divider />
+                          </>
+                        )}
+                      </div>
                     );
                   })}
                 </List>

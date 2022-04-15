@@ -107,17 +107,15 @@ const Orders = () => {
       width: 125,
       renderCell: (params) => {
         return (
-          <div>
-            <Button
-              variant="text"
-              onClick={() => {
-                handleOrderOpen(params.row);
-                console.log(params.row);
-              }}
-            >
-              {params.row.ordernumber}
-            </Button>
-          </div>
+          <Button
+            variant="text"
+            onClick={() => {
+              handleOrderOpen(params.row);
+              console.log(params.row);
+            }}
+          >
+            {params.row.ordernumber}
+          </Button>
         );
       },
     },
@@ -144,16 +142,14 @@ const Orders = () => {
           }
         };
         return (
-          <>
-            <Chip
-              label={params.row.status}
-              color={handleColor(params.row.status)}
-              size="small"
-              onClick={() => {
-                handleStatusOpen(params.row);
-              }}
-            />
-          </>
+          <Chip
+            label={params.row.status}
+            color={handleColor(params.row.status)}
+            size="small"
+            onClick={() => {
+              handleStatusOpen(params.row);
+            }}
+          />
         );
       },
     },
@@ -169,17 +165,13 @@ const Orders = () => {
       editable: true,
       renderCell: (params) => {
         return (
-          <>
-            <Grid container justifyContent="center">
-              <Chip
-                label={params.row.scheduled}
-                variant="outlined"
-                color={
-                  params.row.scheduled === "ASAP" ? "warning" : "secondary"
-                }
-              />
-            </Grid>
-          </>
+          <Grid container justifyContent="center">
+            <Chip
+              label={params.row.scheduled}
+              variant="outlined"
+              color={params.row.scheduled === "ASAP" ? "warning" : "secondary"}
+            />
+          </Grid>
         );
       },
     },
@@ -191,7 +183,7 @@ const Orders = () => {
       editable: true,
       renderCell: (params) => {
         return (
-          <>
+          <Grid container justifyContent="center">
             {params.row.delivery === 0 ? (
               <Chip
                 variant="outlined"
@@ -207,7 +199,7 @@ const Orders = () => {
                 icon={<DirectionsCarOutlinedIcon />}
               />
             )}
-          </>
+          </Grid>
         );
       },
     },
