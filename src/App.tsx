@@ -5,7 +5,7 @@ import MainDash from "./MainDash";
 import Orders from "./components/Orders/Orders";
 import Products from "./components/Products/Products";
 import Users from './components/Users/Users'
-import Main from './components/MainPage'
+import Main from './components/MainPage/MainPage'
 
 function App() {
   return (

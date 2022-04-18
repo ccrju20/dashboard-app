@@ -1,5 +1,7 @@
 import React from "react";
 import { Grid, Paper, Container } from "@mui/material";
+import LineGraph from './LineGraph'
+import PieChart from './PieChart'
 
 const MainPage = () => {
   return (
@@ -37,18 +39,15 @@ const MainPage = () => {
             </Paper>
           </Grid>
 
-          {/* Metric */}
+          {/* Pie Chart */}
           <Grid item xs={12} md={4} lg={4}>
             <Paper
               elevation={3}
               sx={{
-                p: 5,
-                display: "flex",
-                flexDirection: "column",
-                height: 200,
+                padding: 2,
               }}
             >
-              Metric
+              <PieChart/>
             </Paper>
           </Grid>
 
@@ -57,17 +56,14 @@ const MainPage = () => {
             <Paper
               elevation={3}
               sx={{
-                p: 5,
-                display: "flex",
-                flexDirection: "column",
-                height: 240,
+                padding: 2
               }}
             >
-              Line Chart
+              <LineGraph/>
             </Paper>
           </Grid>
 
-          {/* Produce Pie */}
+          {/* Metric */}
           <Grid item xs={12} md={4} lg={3}>
             <Paper
               elevation={3}
@@ -78,7 +74,7 @@ const MainPage = () => {
                 height: 240,
               }}
             >
-              Pie Chart
+              Metric
             </Paper>
           </Grid>
         </Grid>

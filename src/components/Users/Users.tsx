@@ -15,6 +15,7 @@ import {
 import axios from "axios";
 import UserInfo from "./UserInfo";
 import UserOrders from "./UserOrders";
+import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 const Users = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -163,7 +164,13 @@ const Users = () => {
         userOrders={userOrders}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <h1>Users</h1>
+        <h1>
+          <PeopleOutlineIcon
+            fontSize="large"
+            sx={{ marginBottom: -0.5, marginRight: 1 }}
+          />
+          Users
+        </h1>
 
         <Grid container justifyContent="center">
           {isLoading && !loadError ? (
