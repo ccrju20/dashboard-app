@@ -9,11 +9,11 @@ export interface IOrder {
   status: string;
   delivery: number;
   account: string;
-  orderDetails: IOrderDetails;
-  orderItems: IOrderItems[];
+  orderDetails: OrderDetails;
+  orderItems: OrderItems[];
 }
 
-export interface IOrderDetails {  
+interface OrderDetails {  
   id: number;
   email: string;  
   firstname: string;  
@@ -26,7 +26,7 @@ export interface IOrderDetails {
   postal?: string;
 }
 
-export interface IOrderItems {
+interface OrderItems {
   id: number;
   product: Product;
   productOption: IAddProductOption;

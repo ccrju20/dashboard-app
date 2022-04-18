@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import { IProductForm } from "../../Interfaces/IProductForm";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Box, Grid, Switch, TextField } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Switch,
+  TextField,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 
 const AddProductForm = () => {
   const {
     control,
-    register,
     formState: { errors },
   } = useFormContext<IProductForm>();
 
@@ -70,7 +74,6 @@ const AddProductForm = () => {
               <Switch
                 checked={active === 1}
                 onChange={(event, value) => {
-                  console.log(value);
                   onChange(value ? 1 : 0);
                   value ? setActive(1) : setActive(0);
                 }}

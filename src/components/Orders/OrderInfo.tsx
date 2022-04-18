@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IDialogOrder as Props } from "../Interfaces/IDialog";
 import DialogActions from "@mui/material/DialogActions";
 import {
@@ -11,12 +11,12 @@ import {
   Typography,
   Avatar,
   Button,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  Divider
 } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 
 const OrderInfo: React.FC<Props> = ({ open, close, order, getOrders }) => {
   return (
@@ -78,7 +78,7 @@ const OrderInfo: React.FC<Props> = ({ open, close, order, getOrders }) => {
                       <ListItemText primary={`${order.orderDetails?.phone}`} />
                     </ListItem>
                   </List>
-                  {order.orderDetails?.address != "" && (
+                  {order.orderDetails?.address !== "" && (
                     <ListItem alignItems="flex-start">
                       <Chip
                         label="Address:"

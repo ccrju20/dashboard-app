@@ -1,5 +1,3 @@
-import { SubmitHandler, Control } from "react-hook-form";
-
 export interface IProductForm {
     id: number;
     title: string;

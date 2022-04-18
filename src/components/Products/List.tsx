@@ -2,22 +2,28 @@ import React, { useState } from "react";
 import { IProducts as Props, Product } from "../Interfaces/IProducts";
 import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
-import { Grid, Box, Button, Typography, CardActionArea } from "@mui/material";
-import Container from "@mui/material/Container";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Avatar from "@mui/material/Avatar";
-import Divider from "@mui/material/Divider";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
+import {
+  Grid,
+  Box,
+  Container,
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  CardMedia,
+  Avatar,
+  Divider,
+  Collapse,
+  IconButton,
+  Typography,
+  CardActionArea,
+  Popover,
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import EditProduct from "./EditProduct";
 import AddProductOption from "./AddProductOptions";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Popover from "@mui/material/Popover";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import Notification from "./Notification";
 
@@ -73,7 +79,6 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
 
   // Submit Delete Product
   const deleteProduct = (productId: number): void => {
-    console.log("confirmed product delete");
     handleCloseDeleteProd();
 
     axios

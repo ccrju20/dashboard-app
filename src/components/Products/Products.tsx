@@ -2,15 +2,11 @@ import { useState, useEffect } from "react";
 import { IProducts } from "../Interfaces/IProducts";
 import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
-import AddProductMain from './NewProduct/AddProductMain'
+import AddProductMain from "./NewProduct/AddProductMain";
 import List from "./List";
-import CircularProgress from "@mui/material/CircularProgress";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
+import { Grid, Box, Button, Chip, CircularProgress } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
-import Chip from "@mui/material/Chip";
 
 const PRODUCTS_REST_API_URL = "api/v1/products";
 
@@ -57,7 +53,10 @@ const Products = () => {
       />
       <Grid container justifyContent="center">
         <h1>
-          <CakeOutlinedIcon fontSize="large" sx={{ marginBottom: -0.5, marginRight: 1 }} />
+          <CakeOutlinedIcon
+            fontSize="large"
+            sx={{ marginBottom: -0.5, marginRight: 1 }}
+          />
           Products
         </h1>
         <Grid container>

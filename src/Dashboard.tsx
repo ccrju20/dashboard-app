@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import {
+  Box,
+  Toolbar,
+  List,
+  Typography,
+  IconButton,
+  Badge,
+} from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import Badge from "@mui/material/Badge";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -89,7 +91,6 @@ const Dashboard = () => {
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  // const navigate = useNavigate();
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -132,7 +133,9 @@ const Dashboard = () => {
         </AppBar>
         <Drawer variant="permanent" open={open}>
           <Box mt={10}>
-            <List component="nav"><ListItems/></List>
+            <List component="nav">
+              <ListItems />
+            </List>
           </Box>
           <Toolbar
             sx={{

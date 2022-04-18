@@ -1,16 +1,13 @@
 import TextField from "@mui/material/TextField";
 import { IProductForm } from "../Interfaces/IProductForm";
 import { Controller, useFieldArray, useFormContext } from "react-hook-form";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Avatar from "@mui/material/Avatar";
+import {Grid, Card, CardContent, Avatar} from "@mui/material";
 
 const EditProductOption = () => {
   const {
     control,
-    formState: { errors },
-    watch
+    // formState: { errors },
+    // watch
   } = useFormContext();
 
   const { fields } = useFieldArray<IProductForm, "options", "option_id">({
@@ -18,9 +15,8 @@ const EditProductOption = () => {
     keyName: "option_id",
   });
 
-  console.log(watch('options'));
-  console.log(errors);
-  console.log(errors.options);
+  // console.log(watch('options'));
+  // console.log(errors);
 
   return (
     <>
