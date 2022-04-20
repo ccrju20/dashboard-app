@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Box, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
@@ -8,9 +9,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart = () => {
   const [productData, setProductData] = useState({});
 
-  useEffect(() => {
+  const getData = () => {
     axios
-      .get("api/v1/orders/data")
+      .get("api/v1/dashboard/pie")
       .then((res) => {
         console.log(res);
         setProductData(res.data);
@@ -18,13 +19,30 @@ const PieChart = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
+
+  const options: any = {
+    plugins: {
+      legend: {
+        position: "left",
+        maxWidth: 150,
+        // title: {
+        //   display: true,
+        //   text: "Products",
+        //   padding: 15,
+        // },
+      },
+    },
+  };
 
   const data = {
     labels: Object.keys(productData),
     datasets: [
       {
-        label: "# of Votes",
         data: Object.values(productData),
         backgroundColor: [
           "#8FDDE7",
@@ -36,6 +54,9 @@ const PieChart = () => {
           "#C4AE78",
           "#EFE7D3",
           "#ECE3F0",
+          "#FFF4BD",
+          "#F4B9B8",
+          "#887BB0",
         ],
         borderWidth: 1,
       },
@@ -44,7 +65,12 @@ const PieChart = () => {
 
   return (
     <>
-      <Pie data={data} />
+      <Box mt={2}>
+        <Typography sx={{ fontSize: 12, fontWeight: "bold" }} color="text.secondary">
+          Product QTY Total (Past 7 Days)
+        </Typography>
+      </Box>
+      <Pie data={data} options={options} />
     </>
   );
 };

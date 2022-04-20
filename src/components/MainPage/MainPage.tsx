@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Paper, Container } from "@mui/material";
-import LineGraph from './LineGraph'
-import PieChart from './PieChart'
+import LineGraph from "./LineGraph";
+import PieChart from "./PieChart";
 
 const MainPage = () => {
   return (
@@ -39,42 +39,45 @@ const MainPage = () => {
             </Paper>
           </Grid>
 
-          {/* Pie Chart */}
-          <Grid item xs={12} md={4} lg={4}>
-            <Paper
-              elevation={3}
-              sx={{
-                padding: 2,
-              }}
-            >
-              <PieChart/>
-            </Paper>
-          </Grid>
-
-          {/* Sales */}
-          <Grid item xs={12} md={8} lg={9}>
-            <Paper
-              elevation={3}
-              sx={{
-                padding: 2
-              }}
-            >
-              <LineGraph/>
-            </Paper>
-          </Grid>
-
           {/* Metric */}
-          <Grid item xs={12} md={4} lg={3}>
+          <Grid item xs={12} md={4} lg={4}>
             <Paper
               elevation={3}
               sx={{
                 p: 5,
                 display: "flex",
                 flexDirection: "column",
-                height: 240,
+                height: 200,
               }}
             >
               Metric
+            </Paper>
+          </Grid>
+        </Grid>
+
+        <br />
+
+        <Grid container spacing={2}>
+          {/* Sales */}
+          <Grid item xs={12} md={8} lg={8}>
+            <Paper
+              elevation={3}
+              sx={{
+                padding: 2,
+              }}
+            >
+              <LineGraph />
+            </Paper>
+          </Grid>
+          {/* Pie Chart */}
+          <Grid item xs={12} md={4} lg={4}>
+            <Paper
+              elevation={3}
+              sx={{
+                padding: 1,
+              }}
+            >
+              <PieChart />
             </Paper>
           </Grid>
         </Grid>

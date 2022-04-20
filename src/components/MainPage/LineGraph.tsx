@@ -25,9 +25,9 @@ ChartJS.register(
 const LineGraph = () => {
   const [salesData, setSalesData] = useState({});
 
-  useEffect(() => {
+  const getData = () => {
     axios
-      .get("api/v1/payment/line")
+      .get("api/v1/dashboard/line")
       .then((res) => {
         console.log(res);
         setSalesData(res.data);
@@ -35,6 +35,10 @@ const LineGraph = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   const options = {
@@ -56,7 +60,7 @@ const LineGraph = () => {
     labels,
     datasets: [
       {
-        label: "Sales",
+        label: "Sales in USD",
         data: salesData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
