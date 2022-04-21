@@ -30,11 +30,6 @@ const PieChart = () => {
       legend: {
         position: "left",
         maxWidth: 150,
-        // title: {
-        //   display: true,
-        //   text: "Products",
-        //   padding: 15,
-        // },
       },
     },
   };
@@ -67,7 +62,7 @@ const PieChart = () => {
     <>
       <Box mt={2}>
         <Typography sx={{ fontSize: 12, fontWeight: "bold" }} color="text.secondary">
-          Product QTY Total (Past 7 Days)
+          Products Sold (Past 7 Days)
         </Typography>
       </Box>
       <Pie data={data} options={options} />

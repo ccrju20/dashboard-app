@@ -10,10 +10,12 @@ import {
 } from "@mui/material";
 import LineGraph from "./LineGraph";
 import PieChart from "./PieChart";
+import Deposits from "./Deposits";
+import TopSellers from "./TopSellers";
 import CalendarMonthTwoToneIcon from "@mui/icons-material/CalendarMonthTwoTone";
 
 const MainPage = () => {
-  const month = new Date().toLocaleString("default", { month: "long" });
+  const month = new Date().toLocaleString("default", { month: "short" });
   const day = new Date().getDate();
   const year = new Date().getFullYear();
   const dayOfWeek = new Date().toLocaleString("default", { weekday: "long" });
@@ -36,7 +38,7 @@ const MainPage = () => {
                   <Grid
                     container
                     justifyContent="center"
-                    sx={{ backgroundColor: "#001D3A", color: "lightgrey" }}
+                    sx={{ backgroundColor: "#00376D", color: "lightgrey" }}
                   >
                     <DialogTitle>
                       <Typography sx={{ fontSize: 16 }}>
@@ -55,26 +57,29 @@ const MainPage = () => {
                       xs={5}
                       container
                       justifyContent="flex-end"
-                      mt={2}
+                      mt={3}
                     >
                       <Typography
                         sx={{ fontSize: 16 }}
                         color="text.secondary"
                         variant="overline"
-                        // mr={2}
                       >
                         {month}
                       </Typography>
                     </Grid>
                     <Grid item xs={7} container justifyContent="flex-start">
-                      <Typography color="text.secondary" sx={{ fontSize: 75 }}>
+                      <Typography
+                        color="text.secondary"
+                        sx={{ fontSize: 60 }}
+                        ml={1}
+                      >
                         {day}
                       </Typography>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Box justifyContent="center" mt={-0.75}>
+              <Box justifyContent="center">
                 <Typography
                   sx={{ letterSpacing: 3 }}
                   color="text.secondary"
@@ -86,18 +91,15 @@ const MainPage = () => {
             </Paper>
           </Grid>
 
-          {/* Metric */}
+          {/* Today's Sales */}
           <Grid item xs={12} md={4} lg={4}>
             <Paper
               elevation={3}
               sx={{
-                p: 5,
-                display: "flex",
-                flexDirection: "column",
                 height: 200,
               }}
             >
-              Metric
+              <Deposits />
             </Paper>
           </Grid>
 
@@ -106,13 +108,10 @@ const MainPage = () => {
             <Paper
               elevation={3}
               sx={{
-                p: 5,
-                display: "flex",
-                flexDirection: "column",
                 height: 200,
               }}
             >
-              Metric
+              <TopSellers />
             </Paper>
           </Grid>
         </Grid>
