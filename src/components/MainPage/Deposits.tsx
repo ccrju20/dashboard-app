@@ -30,7 +30,12 @@ const Deposits = () => {
           <Grid
             container
             justifyContent="center"
-            sx={{ backgroundColor: "#003A3A", color: "lightgrey" }}
+            sx={{
+              backgroundColor: "#003A3A",
+              color: "lightgrey",
+              borderTopLeftRadius: 40,
+              borderTopRightRadius: 40,
+            }}
           >
             <DialogTitle>
               <Typography sx={{ fontSize: 16 }}>
@@ -44,7 +49,7 @@ const Deposits = () => {
         </Grid>
         <Grid item xs={12}>
           <Grid container>
-            <Grid item xs={4.5} container justifyContent="flex-end">
+            <Grid item xs={5} container justifyContent="flex-end">
               <AttachMoneyIcon
                 sx={{
                   fontSize: 80,
@@ -56,12 +61,18 @@ const Deposits = () => {
             </Grid>
             <Grid
               item
-              xs={7.5}
+              xs={7}
               container
               justifyContent="flex-start"
               wrap="nowrap"
             >
-              <Typography noWrap color="#1D3A00" variant="h4" mt={5} sx={{letterSpacing: 2}}>
+              <Typography
+                noWrap
+                color="#1D3A00"
+                variant="h4"
+                mt={5}
+                sx={{ letterSpacing: 2 }}
+              >
                 {deposits === 0 ? "0.00" : deposits}
               </Typography>
             </Grid>

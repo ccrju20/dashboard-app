@@ -35,7 +35,12 @@ const TopSellers = () => {
           <Grid
             container
             justifyContent="center"
-            sx={{ backgroundColor: "#3A003A", color: "lightgrey" }}
+            sx={{
+              backgroundColor: "#3A003A",
+              color: "lightgrey",
+              borderTopLeftRadius: 40,
+              borderTopRightRadius: 40,
+            }}
           >
             <DialogTitle>
               <Typography sx={{ fontSize: 16 }}>
@@ -61,7 +66,11 @@ const TopSellers = () => {
                 >
                   1
                 </Avatar>
-                <Typography color="#3A001D" variant="body2" sx={{marginLeft: 1, letterSpacing: 2}}>
+                <Typography
+                  color="#3A001D"
+                  variant="body2"
+                  sx={{ marginLeft: 1, letterSpacing: 2 }}
+                >
                   {Object.keys(topSellers)[0]}
                 </Typography>
               </ListItem>
@@ -77,7 +86,11 @@ const TopSellers = () => {
                 >
                   2
                 </Avatar>
-                <Typography color="#3A001D" variant="body2" sx={{marginLeft: 1, letterSpacing: 2}}>
+                <Typography
+                  color="#3A001D"
+                  variant="body2"
+                  sx={{ marginLeft: 1, letterSpacing: 2 }}
+                >
                   {Object.keys(topSellers)[1]}
                 </Typography>
               </ListItem>
@@ -93,7 +106,11 @@ const TopSellers = () => {
                 >
                   3
                 </Avatar>
-                <Typography color="#3A001D" variant="body2" sx={{marginLeft: 1, letterSpacing: 2}}>
+                <Typography
+                  color="#3A001D"
+                  variant="body2"
+                  sx={{ marginLeft: 1, letterSpacing: 2 }}
+                >
                   {Object.keys(topSellers)[2]}
                 </Typography>
               </ListItem>

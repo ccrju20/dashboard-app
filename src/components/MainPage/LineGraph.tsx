@@ -60,7 +60,7 @@ const LineGraph = () => {
     labels,
     datasets: [
       {
-        label: "Sales in USD",
+        label: "USD",
         data: salesData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",

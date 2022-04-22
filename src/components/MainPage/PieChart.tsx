@@ -40,7 +40,7 @@ const PieChart = () => {
       {
         data: Object.values(productData),
         backgroundColor: [
-          "#8FDDE7",
+          "#887BB0",
           "#FAE8E0",
           "#B6E2D3",
           "#D8A7B1",
@@ -51,7 +51,7 @@ const PieChart = () => {
           "#ECE3F0",
           "#FFF4BD",
           "#F4B9B8",
-          "#887BB0",
+          "#8FDDE7",
         ],
         borderWidth: 1,
       },
@@ -61,7 +61,10 @@ const PieChart = () => {
   return (
     <>
       <Box mt={2}>
-        <Typography sx={{ fontSize: 12, fontWeight: "bold" }} color="text.secondary">
+        <Typography
+          sx={{ fontSize: 12, fontWeight: "bold" }}
+          color="text.secondary"
+        >
           Products Sold (Past 7 Days)
         </Typography>
       </Box>

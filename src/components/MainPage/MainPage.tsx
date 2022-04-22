@@ -31,6 +31,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <Grid container>
@@ -38,12 +39,17 @@ const MainPage = () => {
                   <Grid
                     container
                     justifyContent="center"
-                    sx={{ backgroundColor: "#00376D", color: "lightgrey" }}
+                    sx={{
+                      backgroundColor: "#00376D",
+                      color: "lightgrey",
+                      borderTopLeftRadius: 40,
+                      borderTopRightRadius: 40,
+                    }}
                   >
                     <DialogTitle>
                       <Typography sx={{ fontSize: 16 }}>
                         <CalendarMonthTwoToneIcon
-                          sx={{ marginRight: 2, marginBottom: -0.5 }}
+                          sx={{ marginRight: 1, marginBottom: -0.5 }}
                         />
                         {dayOfWeek}
                       </Typography>
@@ -97,6 +103,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <Deposits />
@@ -109,6 +116,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <TopSellers />
@@ -125,6 +133,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 padding: 2,
+                borderRadius: 10,
               }}
             >
               <LineGraph />
@@ -136,6 +145,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 padding: 1,
+                borderRadius: 10,
               }}
             >
               <PieChart />
