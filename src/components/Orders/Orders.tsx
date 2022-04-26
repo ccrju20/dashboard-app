@@ -288,6 +288,11 @@ const Orders = () => {
                   rowsPerPageOptions={[10]}
                   checkboxSelection
                   disableSelectionOnClick
+                  initialState={{
+                    sorting: {
+                      sortModel: [{ field: 'datePosted', sort: 'desc' }],
+                    },
+                  }}
                   onSelectionModelChange={(newSelection) => {
                     setSelectionModel(newSelection);
                     handleSelectedOrders(newSelection);

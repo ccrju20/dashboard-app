@@ -48,34 +48,24 @@ const Deposits = () => {
           </Grid>
         </Grid>
         <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={5} container justifyContent="flex-end">
-              <AttachMoneyIcon
-                sx={{
-                  fontSize: 80,
-                  color: "#1D3A00",
-                  marginRight: -2,
-                  marginTop: 3,
-                }}
-              />
-            </Grid>
-            <Grid
-              item
-              xs={7}
-              container
-              justifyContent="flex-start"
-              wrap="nowrap"
+          <Grid container justifyContent="center" wrap="nowrap">
+            <AttachMoneyIcon
+              sx={{
+                fontSize: 80,
+                color: "#1D3A00",
+                marginRight: -2,
+                marginTop: 3,
+              }}
+            />
+            <Typography
+              noWrap
+              color="#1D3A00"
+              variant="h4"
+              mt={5}
+              sx={{ letterSpacing: 2 }}
             >
-              <Typography
-                noWrap
-                color="#1D3A00"
-                variant="h4"
-                mt={5}
-                sx={{ letterSpacing: 2 }}
-              >
-                {deposits === 0 ? "0.00" : deposits}
-              </Typography>
-            </Grid>
+              {deposits === 0 ? "0.00" : deposits}
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
