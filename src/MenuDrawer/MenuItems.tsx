@@ -11,7 +11,7 @@ import { ListItem } from "@mui/material";
 
 const MenuItems = () => {
   const navigate = useNavigate();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(1);
 
   return (
     <>

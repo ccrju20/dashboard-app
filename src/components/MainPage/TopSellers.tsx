@@ -6,7 +6,6 @@ import {
   DialogTitle,
   List,
   ListItem,
-  ListItemAvatar,
   Avatar,
 } from "@mui/material";
 import ArrowCircleUpOutlinedIcon from "@mui/icons-material/ArrowCircleUpOutlined";
