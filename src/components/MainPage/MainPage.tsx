@@ -60,7 +60,7 @@ const MainPage = () => {
                   <Grid container>
                     <Grid
                       item
-                      xs={5}
+                      xs={6}
                       container
                       justifyContent="flex-end"
                       mt={3}
@@ -73,7 +73,7 @@ const MainPage = () => {
                         {month}
                       </Typography>
                     </Grid>
-                    <Grid item xs={7} container justifyContent="flex-start">
+                    <Grid item xs={6} container justifyContent="flex-start">
                       <Typography
                         color="text.secondary"
                         sx={{ fontSize: 60 }}
