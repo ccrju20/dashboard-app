@@ -15,69 +15,63 @@ const MenuItems = () => {
 
   return (
     <>
-      <ListItem sx={{ color: active === 1 ? "#008F91" : "lightgrey" }}>
-        <ListItemButton
-          onClick={() => {
-            navigate("/");
-            setActive(1);
-          }}
-        >
-          <ListItemIcon>
-            <ShowChartIcon
-              style={{ color: active === 1 ? "#008F91" : "lightgrey" }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Main" />
-        </ListItemButton>
-      </ListItem>
+      <ListItemButton
+        sx={{ color: active === 1 ? "#008F91" : "lightgrey", marginBottom: 1 }}
+        onClick={() => {
+          navigate("/");
+          setActive(1);
+        }}
+      >
+        <ListItemIcon>
+          <ShowChartIcon
+            style={{ color: active === 1 ? "#008F91" : "lightgrey" }}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Main" />
+      </ListItemButton>
 
-      <ListItem sx={{ color: active === 2 ? "#008F91" : "lightgrey" }}>
-        <ListItemButton
-          onClick={() => {
-            navigate("/products");
-            setActive(2);
-          }}
-        >
-          <ListItemIcon>
-            <CakeIcon
-              style={{ color: active === 2 ? "#008F91" : "lightgrey" }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Products" />
-        </ListItemButton>
-      </ListItem>
+      <ListItemButton
+        sx={{ color: active === 2 ? "#008F91" : "lightgrey", marginBottom: 1 }}
+        onClick={() => {
+          navigate("/products");
+          setActive(2);
+        }}
+      >
+        <ListItemIcon>
+          <CakeIcon style={{ color: active === 2 ? "#008F91" : "lightgrey" }} />
+        </ListItemIcon>
+        <ListItemText primary="Products" />
+      </ListItemButton>
 
-      <ListItem sx={{ color: active === 3 ? "#008F91" : "lightgrey" }}>
-        <ListItemButton
-          onClick={() => {
-            navigate("/orders");
-            setActive(3);
-          }}
-        >
-          <ListItemIcon>
-            <ShoppingBasketIcon
-              style={{ color: active === 3 ? "#008F91" : "lightgrey" }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItemButton>
-      </ListItem>
+      <ListItemButton
+        sx={{ color: active === 3 ? "#008F91" : "lightgrey", marginBottom: 1 }}
+        onClick={() => {
+          navigate("/orders");
+          setActive(3);
+        }}
+      >
+        <ListItemIcon>
+          <ShoppingBasketIcon
+            style={{ color: active === 3 ? "#008F91" : "lightgrey" }}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Orders" />
+      </ListItemButton>
 
-      <ListItem sx={{ color: active === 4 ? "#008F91" : "lightgrey" }}>
-        <ListItemButton
-          onClick={() => {
-            navigate("/users");
-            setActive(4);
-          }}
-        >
-          <ListItemIcon>
-            <PeopleIcon
-              style={{ color: active === 4 ? "#008F91" : "lightgrey" }}
-            />
-          </ListItemIcon>
-          <ListItemText primary="Users" />
-        </ListItemButton>
-      </ListItem>
+      <ListItemButton
+        sx={{ color: active === 4 ? "#008F91" : "lightgrey", marginBottom: 1 }}
+        onClick={() => {
+          navigate("/users");
+          setActive(4);
+        }}
+      >
+        <ListItemIcon>
+          <PeopleIcon
+            style={{ color: active === 4 ? "#008F91" : "lightgrey" }}
+          />
+        </ListItemIcon>
+        <ListItemText primary="Users" />
+      </ListItemButton>
     </>
   );
 };

@@ -10,6 +10,7 @@ import {
   Typography,
   IconButton,
   Badge,
+  Divider,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -18,9 +19,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import ListItems from "./MenuDrawer/MenuItems";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
 export const ServiceContext = createContext({
-  getTotalPending: () => {}
+  getTotalPending: () => {},
 });
 
 const drawerWidth: number = 210;
@@ -141,7 +143,11 @@ const Dashboard = () => {
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>
-            <Box mt={10}>
+            <Box mt={2.5} mb={1}>
+              <StorefrontIcon />
+            </Box>
+            <Divider style={{ background: "lightgrey" }} variant="middle" />
+            <Box mt={5}>
               <List component="nav">
                 <ListItems />
               </List>

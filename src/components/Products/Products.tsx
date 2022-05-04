@@ -4,7 +4,14 @@ import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import AddProductMain from "./NewProduct/AddProductMain";
 import List from "./List";
-import { Grid, Box, Button, Chip, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
 
@@ -51,14 +58,14 @@ const Products = () => {
         close={handleAddClose}
         getProducts={getProducts}
       />
-      <Grid container justifyContent="center">
-        <h1>
+      <Grid container justifyContent="center" mt={4}>
+        <Typography variant="h4">
           <CakeOutlinedIcon
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}
           />
           Products
-        </h1>
+        </Typography>
         <Grid container>
           <Grid item xs={0.5} />
 

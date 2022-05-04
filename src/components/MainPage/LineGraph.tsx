@@ -49,7 +49,7 @@ const LineGraph = () => {
       },
       title: {
         display: true,
-        text: "Sales Per Day (Past 5 Days)",
+        text: "Daily Revenue (Past 5 Days)",
       },
     },
   };

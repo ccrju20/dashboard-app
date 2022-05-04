@@ -22,7 +22,6 @@ const MainPage = () => {
 
   return (
     <>
-      <h1>Main</h1>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {/* Today */}
