@@ -16,6 +16,7 @@ import axios from "axios";
 import UserInfo from "./UserInfo";
 import UserOrders from "./UserOrders";
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import ReportIcon from "@mui/icons-material/Report";
 
 const Users = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -172,15 +173,25 @@ const Users = () => {
           Users
         </Typography>
 
-        <Grid container justifyContent="center" mt={2} >
+        <Grid container justifyContent="center" mt={2}>
           {isLoading && !loadError ? (
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex" }} mt={5}>
               <CircularProgress />
             </Box>
           ) : (
             <div style={{ height: 650, width: "100%" }}>
               {loadError ? (
-                <h1>An error occurred</h1>
+                <>
+                  <Box mt={3}>
+                    <Typography variant="h5">
+                      <ReportIcon
+                        fontSize="large"
+                        sx={{ marginBottom: -1, marginRight: 1 }}
+                      />
+                      Error loading users
+                    </Typography>
+                  </Box>
+                </>
               ) : (
                 <DataGrid
                   rows={rows}

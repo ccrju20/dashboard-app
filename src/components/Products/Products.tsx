@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
+import ReportIcon from "@mui/icons-material/Report";
 
 const PRODUCTS_REST_API_URL = "api/v1/products";
 
@@ -115,7 +116,14 @@ const Products = () => {
             <CircularProgress />
           </Box>
         )}
-        {loadError && <h1>An error occurred</h1>}
+        {loadError && (
+          <>
+            <Typography variant="h5">
+              <ReportIcon fontSize="large" sx={{ marginBottom: -1, marginRight: 1 }} />
+              Error loading products
+            </Typography>
+          </>
+        )}
       </Grid>
     </>
   );

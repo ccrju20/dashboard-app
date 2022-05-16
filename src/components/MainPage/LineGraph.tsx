@@ -11,6 +11,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import ReportIcon from "@mui/icons-material/Report";
+import { Grid, Box, CircularProgress, Typography } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -24,6 +26,8 @@ ChartJS.register(
 
 const LineGraph = () => {
   const [salesData, setSalesData] = useState({});
+  const [loadError, setLoadError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = () => {
     axios
@@ -31,8 +35,10 @@ const LineGraph = () => {
       .then((res) => {
         console.log(res);
         setSalesData(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setLoadError(true);
         console.log(err);
       });
   };
@@ -70,7 +76,36 @@ const LineGraph = () => {
 
   return (
     <>
-      <Line options={options} data={data} />
+      {isLoading && !loadError ? (
+        <Grid container justifyContent="center" mt={5} mb={5}>
+          <CircularProgress />
+        </Grid>
+      ) : (
+        <>
+          {loadError ? (
+            <>
+              <Box mt={2}>
+                <Typography
+                  sx={{ fontSize: 12, fontWeight: "bold" }}
+                  color="text.secondary"
+                >
+                  Daily Revenue (Past 5 Days)
+                </Typography>
+              </Box>
+              <Box mt={5} mb={5}>
+                <Typography variant="h6">
+                  <ReportIcon sx={{ marginBottom: -0.5, marginRight: 1 }} />
+                  Error loading
+                </Typography>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Line options={options} data={data} />
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

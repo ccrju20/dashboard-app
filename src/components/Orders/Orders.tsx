@@ -17,6 +17,7 @@ import OrderStatus from "./OrderStatus";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 import ShoppingBasketIconOutlined from "@mui/icons-material/ShoppingBasketOutlined";
+import ReportIcon from "@mui/icons-material/Report";
 
 const Orders = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -280,7 +281,15 @@ const Orders = () => {
           ) : (
             <div style={{ height: 650, width: "100%" }}>
               {loadError ? (
-                <h1>An error occurred</h1>
+                <>
+                  <Typography variant="h5">
+                    <ReportIcon
+                      fontSize="large"
+                      sx={{ marginBottom: -1, marginRight: 1 }}
+                    />
+                    Error loading orders
+                  </Typography>
+                </>
               ) : (
                 <DataGrid
                   rows={rows}
