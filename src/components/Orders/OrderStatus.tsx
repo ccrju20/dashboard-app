@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { IDialogOrder as Props } from "../Interfaces/IDialog";
 import axios from "axios";
+import { ServiceContext } from "../../Dashboard";
 import {
   Grid,
   Dialog,
@@ -19,7 +20,8 @@ const OrderStatus: React.FC<Props> = ({
   setSelectedRows,
 }) => {
   const [isSingleOrder, setIsSingleOrder] = useState<boolean>(true);
-  
+  const orderCtx = useContext(ServiceContext);
+
   useEffect(() => {
     if (orderNumbers && orderNumbers.length > 0) {
       setIsSingleOrder(false);
@@ -45,6 +47,7 @@ const OrderStatus: React.FC<Props> = ({
           setSelectedRows([]);
         }
         getOrders();
+        orderCtx.getTotalPending();
       })
       .catch((err) => {
         console.log(err);

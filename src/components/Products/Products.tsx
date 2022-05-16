@@ -4,9 +4,17 @@ import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import AddProductMain from "./NewProduct/AddProductMain";
 import List from "./List";
-import { Grid, Box, Button, Chip, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
+import ReportIcon from "@mui/icons-material/Report";
 
 const PRODUCTS_REST_API_URL = "api/v1/products";
 
@@ -51,14 +59,14 @@ const Products = () => {
         close={handleAddClose}
         getProducts={getProducts}
       />
-      <Grid container justifyContent="center">
-        <h1>
+      <Grid container justifyContent="center" mt={4}>
+        <Typography variant="h4">
           <CakeOutlinedIcon
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}
           />
           Products
-        </h1>
+        </Typography>
         <Grid container>
           <Grid item xs={0.5} />
 
@@ -108,7 +116,14 @@ const Products = () => {
             <CircularProgress />
           </Box>
         )}
-        {loadError && <h1>An error occurred</h1>}
+        {loadError && (
+          <>
+            <Typography variant="h5">
+              <ReportIcon fontSize="large" sx={{ marginBottom: -1, marginRight: 1 }} />
+              Error loading products
+            </Typography>
+          </>
+        )}
       </Grid>
     </>
   );

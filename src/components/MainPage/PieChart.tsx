@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Typography } from "@mui/material";
+import { Grid, Box, CircularProgress, Typography } from "@mui/material";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import ReportIcon from "@mui/icons-material/Report";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
   const [productData, setProductData] = useState({});
+  const [loadError, setLoadError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getData = () => {
     axios
@@ -15,8 +18,10 @@ const PieChart = () => {
       .then((res) => {
         console.log(res);
         setProductData(res.data);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setLoadError(true);
         console.log(err);
       });
   };
@@ -40,7 +45,7 @@ const PieChart = () => {
       {
         data: Object.values(productData),
         backgroundColor: [
-          "#8FDDE7",
+          "#887BB0",
           "#FAE8E0",
           "#B6E2D3",
           "#D8A7B1",
@@ -51,7 +56,7 @@ const PieChart = () => {
           "#ECE3F0",
           "#FFF4BD",
           "#F4B9B8",
-          "#887BB0",
+          "#8FDDE7",
         ],
         borderWidth: 1,
       },
@@ -60,12 +65,44 @@ const PieChart = () => {
 
   return (
     <>
-      <Box mt={2}>
-        <Typography sx={{ fontSize: 12, fontWeight: "bold" }} color="text.secondary">
-          Products Sold (Past 7 Days)
-        </Typography>
-      </Box>
-      <Pie data={data} options={options} />
+      {isLoading && !loadError ? (
+        <Grid container justifyContent="center" mt={5} mb={5}>
+          <CircularProgress />
+        </Grid>
+      ) : (
+        <>
+          {loadError ? (
+            <>
+              <Box mt={2}>
+                <Typography
+                  sx={{ fontSize: 12, fontWeight: "bold" }}
+                  color="text.secondary"
+                >
+                  Daily Revenue (Past 5 Days)
+                </Typography>
+              </Box>
+              <Box mt={5} mb={5}>
+                <Typography variant="h6">
+                  <ReportIcon sx={{ marginBottom: -0.5, marginRight: 1 }} />
+                  Error loading
+                </Typography>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box mt={2}>
+                <Typography
+                  sx={{ fontSize: 12, fontWeight: "bold" }}
+                  color="text.secondary"
+                >
+                  Products Sold (Past 7 Days)
+                </Typography>
+              </Box>
+              <Pie data={data} options={options} />
+            </>
+          )}{" "}
+        </>
+      )}
     </>
   );
 };

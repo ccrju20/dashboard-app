@@ -4,8 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainDash from "./MainDash";
 import Orders from "./components/Orders/Orders";
 import Products from "./components/Products/Products";
-import Users from './components/Users/Users'
-import Main from './components/MainPage/MainPage'
+import Users from "./components/Users/Users";
+import Main from "./components/MainPage/MainPage";
+import NotFound from "./NotFound";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
             <Route path="/orders" element={<Orders />} />
             <Route path="/products" element={<Products />} />
             <Route path="/users" element={<Users />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </BrowserRouter>

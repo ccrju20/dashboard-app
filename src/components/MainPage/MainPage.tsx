@@ -22,7 +22,6 @@ const MainPage = () => {
 
   return (
     <>
-      <h1>Main</h1>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Grid container spacing={3}>
           {/* Today */}
@@ -31,6 +30,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <Grid container>
@@ -38,12 +38,17 @@ const MainPage = () => {
                   <Grid
                     container
                     justifyContent="center"
-                    sx={{ backgroundColor: "#00376D", color: "lightgrey" }}
+                    sx={{
+                      backgroundColor: "#00376D",
+                      color: "lightgrey",
+                      borderTopLeftRadius: 40,
+                      borderTopRightRadius: 40,
+                    }}
                   >
                     <DialogTitle>
                       <Typography sx={{ fontSize: 16 }}>
                         <CalendarMonthTwoToneIcon
-                          sx={{ marginRight: 2, marginBottom: -0.5 }}
+                          sx={{ marginRight: 1, marginBottom: -0.5 }}
                         />
                         {dayOfWeek}
                       </Typography>
@@ -54,7 +59,7 @@ const MainPage = () => {
                   <Grid container>
                     <Grid
                       item
-                      xs={5}
+                      xs={6}
                       container
                       justifyContent="flex-end"
                       mt={3}
@@ -67,7 +72,7 @@ const MainPage = () => {
                         {month}
                       </Typography>
                     </Grid>
-                    <Grid item xs={7} container justifyContent="flex-start">
+                    <Grid item xs={6} container justifyContent="flex-start">
                       <Typography
                         color="text.secondary"
                         sx={{ fontSize: 60 }}
@@ -97,6 +102,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <Deposits />
@@ -109,6 +115,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 height: 200,
+                borderRadius: 10,
               }}
             >
               <TopSellers />
@@ -125,6 +132,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 padding: 2,
+                borderRadius: 10,
               }}
             >
               <LineGraph />
@@ -136,6 +144,7 @@ const MainPage = () => {
               elevation={3}
               sx={{
                 padding: 1,
+                borderRadius: 10,
               }}
             >
               <PieChart />

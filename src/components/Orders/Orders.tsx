@@ -7,6 +7,7 @@ import {
   Button,
   CircularProgress,
   Chip,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import { closeReason } from "../Interfaces/IDialog";
@@ -16,6 +17,7 @@ import OrderStatus from "./OrderStatus";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import DirectionsCarOutlinedIcon from "@mui/icons-material/DirectionsCarOutlined";
 import ShoppingBasketIconOutlined from "@mui/icons-material/ShoppingBasketOutlined";
+import ReportIcon from "@mui/icons-material/Report";
 
 const Orders = () => {
   const [orders, setOrders] = useState<IOrder[]>([]);
@@ -238,13 +240,13 @@ const Orders = () => {
         setSelectionModel={setSelectionModel}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <h1>
+        <Typography variant="h4">
           <ShoppingBasketIconOutlined
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}
           />
           Orders
-        </h1>
+        </Typography>
         <Grid container mb={3} spacing={1}>
           <Grid item xs={12} sm={6}>
             <Grid container justifyContent={{ xs: "center", sm: "flex-start" }}>
@@ -279,7 +281,15 @@ const Orders = () => {
           ) : (
             <div style={{ height: 650, width: "100%" }}>
               {loadError ? (
-                <h1>An error occurred</h1>
+                <>
+                  <Typography variant="h5">
+                    <ReportIcon
+                      fontSize="large"
+                      sx={{ marginBottom: -1, marginRight: 1 }}
+                    />
+                    Error loading orders
+                  </Typography>
+                </>
               ) : (
                 <DataGrid
                   rows={rows}
@@ -288,6 +298,11 @@ const Orders = () => {
                   rowsPerPageOptions={[10]}
                   checkboxSelection
                   disableSelectionOnClick
+                  initialState={{
+                    sorting: {
+                      sortModel: [{ field: "datePosted", sort: "desc" }],
+                    },
+                  }}
                   onSelectionModelChange={(newSelection) => {
                     setSelectionModel(newSelection);
                     handleSelectedOrders(newSelection);
