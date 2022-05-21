@@ -11,6 +11,7 @@ import {
   IconButton,
   Badge,
   Divider,
+  Tooltip,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -88,7 +89,7 @@ const Dashboard = () => {
 
   const getTotalPending = () => {
     axios.get("api/v1/dashboard/pending").then((res) => {
-      console.log(res);
+      // console.log(res);
       setPendingOrders(res.data);
     });
   };
@@ -135,11 +136,13 @@ const Dashboard = () => {
               >
                 Dashboard
               </Typography>
-              <IconButton color="inherit">
-                <Badge badgeContent={pendingOrders} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+              <Tooltip title="Orders Pending">
+                <IconButton color="inherit">
+                  <Badge badgeContent={pendingOrders} color="secondary">
+                    <NotificationsIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>

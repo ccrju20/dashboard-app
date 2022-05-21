@@ -36,7 +36,7 @@ const Orders = () => {
     axios
       .get("api/v1/orders")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let theOrders = res.data;
         setOrders(theOrders);
         setRows(

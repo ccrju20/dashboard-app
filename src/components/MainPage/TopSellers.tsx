@@ -22,7 +22,7 @@ const TopSellers = () => {
     axios
       .get("api/v1/dashboard/pie")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setTopSellers(res.data);
         setIsLoading(false);
       })

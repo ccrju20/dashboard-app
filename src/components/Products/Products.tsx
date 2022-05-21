@@ -38,7 +38,7 @@ const Products = () => {
         params: { category: "all", page: 1, size: 15 },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data.products);
         setIsLoading(false);
       })
