@@ -60,7 +60,7 @@ const Products = () => {
         getProducts={getProducts}
       />
       <Grid container justifyContent="center" mt={4}>
-        <Typography variant="h4">
+        <Typography variant="h4" color="text.secondary">
           <CakeOutlinedIcon
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}

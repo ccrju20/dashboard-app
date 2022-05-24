@@ -129,12 +129,12 @@ const Dashboard = () => {
               </IconButton>
               <Typography
                 component="h1"
-                variant="h6"
+                variant="overline"
                 color="inherit"
                 noWrap
                 sx={{ flexGrow: 1 }}
               >
-                Dashboard
+                Bakeshop Dashboard
               </Typography>
               <Tooltip title="Orders Pending">
                 <IconButton color="inherit">
