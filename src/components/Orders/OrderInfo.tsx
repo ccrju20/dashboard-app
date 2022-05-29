@@ -15,8 +15,10 @@ import {
   ListItem,
   ListItemText,
   ListItemAvatar,
-  Divider
+  Divider,
+  Link
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 const OrderInfo: React.FC<Props> = ({ open, close, order, getOrders }) => {
   return (
@@ -52,9 +54,9 @@ const OrderInfo: React.FC<Props> = ({ open, close, order, getOrders }) => {
                       />
                       <ListItemText
                         primary={
-                          <a href="#" style={{ textDecoration: "none" }}>
+                          <Link component={RouterLink} to="" underline="none">
                             {`${order.orderDetails?.email}`}
-                          </a>
+                          </Link>
                         }
                       />
                     </ListItem>
