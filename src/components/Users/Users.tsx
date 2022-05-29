@@ -32,7 +32,7 @@ const Users = () => {
     axios
       .get("api/v1/auth/users")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let theUsers = res.data;
         setUsers(theUsers);
         setRows(
@@ -69,7 +69,7 @@ const Users = () => {
 
   const handleUserOrdersOpen = (user: IUser): void => {
     axios.get(`api/v1/orders/account/${user.uuid}`).then((res) => {
-      console.log(res);
+      // console.log(res);
       setUserOrders(res.data);
     });
 
@@ -165,7 +165,7 @@ const Users = () => {
         userOrders={userOrders}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography variant="h4">
+        <Typography variant="h4" color="text.secondary">
           <PeopleOutlineIcon
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}

@@ -7,7 +7,6 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import PeopleIcon from "@mui/icons-material/People";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import CakeIcon from "@mui/icons-material/Cake";
-import { ListItem } from "@mui/material";
 
 const MenuItems = () => {
   const navigate = useNavigate();

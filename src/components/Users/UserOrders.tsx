@@ -14,7 +14,6 @@ import {
   DialogActions,
   Typography,
   Divider,
-  Box,
 } from "@mui/material";
 
 const UserOrders: React.FC<Props> = ({ open, close, user, userOrders }) => {

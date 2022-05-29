@@ -33,7 +33,7 @@ const LineGraph = () => {
     axios
       .get("api/v1/dashboard/line")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setSalesData(res.data);
         setIsLoading(false);
       })

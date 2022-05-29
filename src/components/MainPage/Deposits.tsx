@@ -20,7 +20,7 @@ const Deposits = () => {
     axios
       .get("api/v1/dashboard/today")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setDeposits(res.data);
         setIsLoading(false);
       })

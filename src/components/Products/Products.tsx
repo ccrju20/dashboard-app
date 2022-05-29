@@ -38,7 +38,7 @@ const Products = () => {
         params: { category: "all", page: 1, size: 15 },
       })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setProducts(response.data.products);
         setIsLoading(false);
       })
@@ -60,7 +60,7 @@ const Products = () => {
         getProducts={getProducts}
       />
       <Grid container justifyContent="center" mt={4}>
-        <Typography variant="h4">
+        <Typography variant="h4" color="text.secondary">
           <CakeOutlinedIcon
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}

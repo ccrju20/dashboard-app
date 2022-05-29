@@ -36,7 +36,7 @@ const Orders = () => {
     axios
       .get("api/v1/orders")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         let theOrders = res.data;
         setOrders(theOrders);
         setRows(
@@ -240,7 +240,7 @@ const Orders = () => {
         setSelectionModel={setSelectionModel}
       />
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        <Typography variant="h4">
+        <Typography variant="h4" color="text.secondary">
           <ShoppingBasketIconOutlined
             fontSize="large"
             sx={{ marginBottom: -0.5, marginRight: 1 }}

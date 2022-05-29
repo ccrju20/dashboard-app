@@ -16,7 +16,7 @@ const PieChart = () => {
     axios
       .get("api/v1/dashboard/pie")
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setProductData(res.data);
         setIsLoading(false);
       })
@@ -78,7 +78,7 @@ const PieChart = () => {
                   sx={{ fontSize: 12, fontWeight: "bold" }}
                   color="text.secondary"
                 >
-                  Daily Revenue (Past 5 Days)
+                  Products Sold (Past 7 Days)
                 </Typography>
               </Box>
               <Box mt={5} mb={5}>
@@ -100,7 +100,7 @@ const PieChart = () => {
               </Box>
               <Pie data={data} options={options} />
             </>
-          )}{" "}
+          )}
         </>
       )}
     </>
