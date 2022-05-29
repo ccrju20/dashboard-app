@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import MainDash from "./MainDash";
 import Orders from "./components/Orders/Orders";
 import Products from "./components/Products/Products";
@@ -11,7 +11,7 @@ import NotFound from "./NotFound";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route element={<MainDash />}>
             <Route path="/" element={<Main />} />
@@ -21,7 +21,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
