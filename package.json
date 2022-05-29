@@ -1,5 +1,4 @@
 {
-  "homepage": "https://ccrju20.github.io/dashboard-app",
   "name": "dashboard-app",
   "version": "0.1.0",
   "private": true,
@@ -29,8 +28,6 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -54,8 +51,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://bakeshopapp-env-1.eba-bf5dgg3k.us-east-1.elasticbeanstalk.com",
-  "devDependencies": {
-    "gh-pages": "^4.0.0"
-  }
+  "proxy": "http://bakeshopapp-env-1.eba-bf5dgg3k.us-east-1.elasticbeanstalk.com"
 }
