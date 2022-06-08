@@ -24,8 +24,18 @@ import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
 import EditProduct from "./EditProduct";
 import AddProductOption from "./AddProductOptions";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import Notification from "./Notification";
+import ProdPopover from "./ProdPopover";
+
+export interface IPopover {
+  id: string | undefined;
+  open: boolean;
+  anchorEl: HTMLButtonElement | null;
+  onClose: () => void;
+  deleteProduct: (productId: number) => void;
+  handleCloseDeleteProd: () => void;
+  popoverProd: number;
+}
 
 const ProductList: React.FC<Props> = ({ products, getProducts }) => {
   const [expanded, setExpanded] = useState({});
@@ -35,11 +45,13 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
     null
   );
-  const openDeleteProd = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
   const [notification, setNotification] = useState(false);
   const [notificationMsg, setNotificationMsg] = useState("");
   const [updateError, setUpdateError] = useState(false);
+  const [popoverProd, setPopoverProd] = useState(0);
+
+  const openDeleteProd = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   const handleEditOpen = (product: Product): void => {
     setSelectedProduct(product);
@@ -68,17 +80,20 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
 
   // Delete Product
   const handleClickDeleteProd = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
+    productId: number
   ) => {
     setAnchorEl(event.currentTarget);
+    setPopoverProd(productId);
   };
 
-  const handleCloseDeleteProd = () => {
+  const handleCloseDeleteProd = (): void => {
     setAnchorEl(null);
   };
 
   // Submit Delete Product
   const deleteProduct = (productId: number): void => {
+    console.log(productId)
     handleCloseDeleteProd();
 
     axios
@@ -130,54 +145,21 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
                 <IconButton
                   aria-describedby={id}
                   onClick={(e) => {
-                    handleClickDeleteProd(e);
+                    handleClickDeleteProd(e, product.id);
                   }}
                 >
                   <DeleteOutlineIcon />
                 </IconButton>
-                <Popover
+
+                <ProdPopover
                   id={id}
                   open={openDeleteProd}
                   anchorEl={anchorEl}
                   onClose={handleCloseDeleteProd}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  transformOrigin={{
-                    vertical: "bottom",
-                    horizontal: "left",
-                  }}
-                >
-                  <Typography sx={{ p: 2 }} color="error">
-                    <WarningAmberIcon
-                      sx={{ marginBottom: -0.5, marginRight: 1 }}
-                    />
-                    Warning: confirm will remove from database
-                  </Typography>
-                  <Box display="flex" justifyContent="center" mb={2}>
-                    <Typography variant="body2" color="text.secondary">
-                      (Consider marking as inactive)
-                    </Typography>
-                  </Box>
-
-                  <Grid container justifyContent="center">
-                    <Button
-                      onClick={() => {
-                        deleteProduct(product.id);
-                      }}
-                    >
-                      Confirm
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        handleCloseDeleteProd();
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </Grid>
-                </Popover>
+                  deleteProduct={deleteProduct}
+                  handleCloseDeleteProd={handleCloseDeleteProd}
+                  popoverProd={popoverProd}
+                />
               </Grid>
             </Grid>
             <CardActionArea onClick={() => handleEditOpen(product)}>

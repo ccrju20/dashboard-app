@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { IDialog as Props } from "../Interfaces/IDialog";
-import { IAddProductOption } from '../Interfaces/IProductForm'
-import { SchemaOf, object, number} from "yup";
+import { IAddProductOption } from "../Interfaces/IProductForm";
+import { SchemaOf, object, number } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
@@ -23,13 +23,20 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Popover from "@mui/material/Popover";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
+import ProdPopover from "./ProdPopover";
 
 const PRODUCT_OPTIONS_API_URL = "api/v1/products/options";
 
 export const addProductOptionSchema: SchemaOf<IAddProductOption> = object({
-  option_id: number().typeError("Must be a number greater than 1").min(1).required(),
+  option_id: number()
+    .typeError("Must be a number greater than 1")
+    .min(1)
+    .required(),
   size: number().typeError("Must be a number greater than 1").min(1).required(),
-  price: number().typeError("Must be a number greater than 1").min(1).required(),
+  price: number()
+    .typeError("Must be a number greater than 1")
+    .min(1)
+    .required(),
 });
 
 const AddProductOptions: React.FC<Props> = ({
@@ -46,6 +53,8 @@ const AddProductOptions: React.FC<Props> = ({
   } = useForm<IAddProductOption>({
     resolver: yupResolver(addProductOptionSchema),
   });
+
+  const [popoverProdOp, setPopoverProdOp] = useState(0);
 
   // Submit Add Option
   const addOption: SubmitHandler<IAddProductOption> = (
@@ -67,7 +76,7 @@ const AddProductOptions: React.FC<Props> = ({
 
   // Submit Delete Option
   const deleteOption = (optionId: number): void => {
-    console.log("confirmed delete");
+    console.log(optionId)
     close("closeButtonClick");
     handleCloseDelete();
 
@@ -90,7 +99,12 @@ const AddProductOptions: React.FC<Props> = ({
     null
   );
 
-  const handleClickDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClickDelete = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    optionId: number
+  ) => {
+    console.log(optionId);
+    setPopoverProdOp(optionId);
     setAnchorEl(event.currentTarget);
   };
 
@@ -132,49 +146,22 @@ const AddProductOptions: React.FC<Props> = ({
                           <IconButton
                             aria-describedby={id}
                             onClick={(e) => {
-                              handleClickDelete(e);
+                              handleClickDelete(e, option.option_id);
                             }}
                           >
                             <DeleteOutlineIcon />
                           </IconButton>
-                          <Popover
+
+                          <ProdPopover
                             id={id}
                             open={openDelete}
                             anchorEl={anchorEl}
                             onClose={handleCloseDelete}
-                            anchorOrigin={{
-                              vertical: "top",
-                              horizontal: "right",
-                            }}
-                            transformOrigin={{
-                              vertical: "bottom",
-                              horizontal: "left",
-                            }}
-                          >
-                            <Typography sx={{ p: 2 }} color="error">
-                              <WarningAmberIcon
-                                sx={{ marginBottom: -0.5, marginRight: 1 }}
-                              />
-                              Warning: confirm will remove from database
-                            </Typography>
+                            deleteProduct={deleteOption}
+                            handleCloseDeleteProd={handleCloseDelete}
+                            popoverProd={popoverProdOp}
+                          />
 
-                            <Grid container justifyContent="center">
-                              <Button
-                                onClick={() => {
-                                  deleteOption(option.option_id);
-                                }}
-                              >
-                                Confirm
-                              </Button>
-                              <Button
-                                onClick={() => {
-                                  handleCloseDelete();
-                                }}
-                              >
-                                Cancel
-                              </Button>
-                            </Grid>
-                          </Popover>
                         </ListItem>
                       </div>
                     );
