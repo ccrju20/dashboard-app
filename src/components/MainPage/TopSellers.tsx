@@ -34,6 +34,11 @@ const TopSellers = () => {
   useEffect(() => {
     getTopSellers();
   }, []);
+
+  const topSeller1: number = Object.values(topSellers)[0] as number;
+  const topSeller2: number = Object.values(topSellers)[1] as number;
+  const topSeller3: number = Object.values(topSellers)[2] as number;
+
   return (
     <>
       <Grid container>
@@ -77,65 +82,77 @@ const TopSellers = () => {
               ) : (
                 <Grid container justifyContent="center">
                   <List sx={{ marginTop: 1.5, marginLeft: 1, padding: 0 }}>
-                    <ListItem sx={{ padding: 0.5 }}>
-                      <Avatar
-                        sx={{
-                          width: 25,
-                          height: 25,
-                          fontSize: 30,
-                          bgcolor: "#6D006D",
-                        }}
-                      >
-                        1
-                      </Avatar>
-                      <Typography
-                        color="#3A001D"
-                        variant="body2"
-                        sx={{ marginLeft: 1, letterSpacing: 2 }}
-                      >
-                        {Object.keys(topSellers)[0]}
-                      </Typography>
-                    </ListItem>
+                    {topSeller1 > 0 && (
+                      <>
+                        <ListItem sx={{ padding: 0.5 }}>
+                          <Avatar
+                            sx={{
+                              width: 25,
+                              height: 25,
+                              fontSize: 30,
+                              bgcolor: "#6D006D",
+                            }}
+                          >
+                            1
+                          </Avatar>
+                          <Typography
+                            color="#3A001D"
+                            variant="body2"
+                            sx={{ marginLeft: 1, letterSpacing: 2 }}
+                          >
+                            {Object.keys(topSellers)[0]}
+                          </Typography>
+                        </ListItem>
+                      </>
+                    )}
 
-                    <ListItem sx={{ padding: 0.5 }}>
-                      <Avatar
-                        sx={{
-                          width: 25,
-                          height: 25,
-                          fontSize: 25,
-                          bgcolor: "#6D006D",
-                        }}
-                      >
-                        2
-                      </Avatar>
-                      <Typography
-                        color="#3A001D"
-                        variant="body2"
-                        sx={{ marginLeft: 1, letterSpacing: 2 }}
-                      >
-                        {Object.keys(topSellers)[1]}
-                      </Typography>
-                    </ListItem>
+                    {topSeller2 > 0 && (
+                      <>
+                        <ListItem sx={{ padding: 0.5 }}>
+                          <Avatar
+                            sx={{
+                              width: 25,
+                              height: 25,
+                              fontSize: 25,
+                              bgcolor: "#6D006D",
+                            }}
+                          >
+                            2
+                          </Avatar>
+                          <Typography
+                            color="#3A001D"
+                            variant="body2"
+                            sx={{ marginLeft: 1, letterSpacing: 2 }}
+                          >
+                            {Object.keys(topSellers)[1]}
+                          </Typography>
+                        </ListItem>
+                      </>
+                    )}
 
-                    <ListItem sx={{ padding: 0.5 }}>
-                      <Avatar
-                        sx={{
-                          width: 25,
-                          height: 25,
-                          fontSize: 21,
-                          bgcolor: "#6D006D",
-                        }}
-                      >
-                        3
-                      </Avatar>
-                      <Typography
-                        color="#3A001D"
-                        variant="body2"
-                        sx={{ marginLeft: 1, letterSpacing: 2 }}
-                      >
-                        {Object.keys(topSellers)[2]}
-                      </Typography>
-                    </ListItem>
+                    {topSeller3 > 0 && (
+                      <>
+                        <ListItem sx={{ padding: 0.5 }}>
+                          <Avatar
+                            sx={{
+                              width: 25,
+                              height: 25,
+                              fontSize: 21,
+                              bgcolor: "#6D006D",
+                            }}
+                          >
+                            3
+                          </Avatar>
+                          <Typography
+                            color="#3A001D"
+                            variant="body2"
+                            sx={{ marginLeft: 1, letterSpacing: 2 }}
+                          >
+                            {Object.keys(topSellers)[2]}
+                          </Typography>
+                        </ListItem>
+                      </>
+                    )}
                   </List>
                 </Grid>
               )}
