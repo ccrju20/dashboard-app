@@ -20,4 +20,4 @@ A B2B dashboard web app for a small business [e-commerce project](https://github
 The project is hosted in AWS through the following link: http://d3m0dwxhzm7xbb.cloudfront.net
 
 ## Documentation
-Navigate to [this porfolio] and click on the Documentation link under 'Dashboard App' for a full description of steps, as well as screenshots
+Navigate to the [project portfolio](https://ccrju20.github.io/Portfolio/) and click on the Documentation link under 'Dashboard App' for a full description of steps, as well as screenshots
