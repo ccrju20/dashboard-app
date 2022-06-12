@@ -5,7 +5,7 @@ import { IAddProductOption } from "../Interfaces/IProductForm";
 import { SchemaOf, object, number } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -21,8 +21,6 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Popover from "@mui/material/Popover";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ProdPopover from "./ProdPopover";
 
 const PRODUCT_OPTIONS_API_URL = "api/v1/products/options";
@@ -140,7 +138,7 @@ const AddProductOptions: React.FC<Props> = ({
                           </ListItemAvatar>
                           <ListItemText
                             primary={` SKU: ${option.option_id} / size: ${option.size} /
-                            price: ${option.price}`}
+                            price: ${option.price.toFixed(2)}`}
                           />
 
                           <IconButton

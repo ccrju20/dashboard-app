@@ -180,7 +180,7 @@ const EditProduct: React.FC<Props> = ({
             <br />
             <CardMedia
               component="img"
-              height="240"
+              height="540"
               image={product?.img}
               alt="product"
             />

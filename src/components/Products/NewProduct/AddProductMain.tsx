@@ -40,13 +40,11 @@ const AddProductMain: React.FC<Props> = ({ open, close, getProducts }) => {
   const [updateError, setUpdateError] = useState(false);
 
   const submitProduct: SubmitHandler<IProductForm> = (data: IProductForm) => {
-    console.log(data);
     close("closeButtonClick");
 
     axios
       .post("api/v1/products", data)
       .then((res) => {
-        console.log(res);
         setNotificationMsg(`Product ID: ${res.data.id} - Added Successfully!`);
         setNotification(true);
         getProducts();

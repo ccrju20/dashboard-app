@@ -11,7 +11,7 @@ import NotFound from "./NotFound";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route element={<MainDash />}>
             <Route path="/" element={<Main />} />
@@ -21,7 +21,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
