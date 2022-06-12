@@ -39,6 +39,8 @@ const PieChart = () => {
     },
   };
 
+  // Note: colors are currently hardcoded for up to 20 products
+
   const data = {
     labels: Object.keys(productData),
     datasets: [
@@ -51,12 +53,20 @@ const PieChart = () => {
           "#D8A7B1",
           "#C38370",
           "#D3BBDD",
+          "#67595E",
+          "#D48C70",
+          "#EBBBB0",
           "#C4AE78",
           "#EFE7D3",
-          "#ECE3F0",
-          "#FFF4BD",
           "#F4B9B8",
+          "#FFF4BD",
+          "#ECE3F0",
           "#8FDDE7",
+          "#A49393",
+          "#1F232C",
+          "#DFD6D1",
+          "#5C4E4E",
+          "#D1D0D0",
         ],
         borderWidth: 1,
       },

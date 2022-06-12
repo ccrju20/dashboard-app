@@ -37,8 +37,14 @@ const editProductSchema = object({
   options: array(
     object({
       option_id: number().typeError("Must be a number greater than 1").min(1),
-      size: number().typeError("Must be a number greater than 1").min(1),
-      price: number().typeError("Must be a number greater than 1").min(1),
+      size: number()
+        .typeError("Must be a number greater than 1 or less than 50")
+        .min(1)
+        .max(50),
+      price: number()
+        .typeError("Must be a number greater than 1 or less than 200")
+        .min(1)
+        .max(200),
     })
   ),
 });
