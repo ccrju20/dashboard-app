@@ -4,9 +4,7 @@ import { closeReason } from "../Interfaces/IDialog";
 import axios from "axios";
 import {
   Grid,
-  Box,
   Container,
-  Button,
   Card,
   CardHeader,
   CardContent,
@@ -17,7 +15,6 @@ import {
   IconButton,
   Typography,
   CardActionArea,
-  Popover,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessOutlinedIcon from "@mui/icons-material/ExpandLessOutlined";
@@ -165,7 +162,7 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
             <CardActionArea onClick={() => handleEditOpen(product)}>
               <CardMedia
                 component="img"
-                height="140"
+                height="280"
                 image={product.img}
                 alt="product"
               />
@@ -183,7 +180,7 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
                     Description:
                   </Typography>
                 </Grid>
-                <Typography ml={1} variant="body2">
+                <Typography ml={1} variant="body2" noWrap>
                   "{product.description}"
                 </Typography>
               </CardContent>
@@ -205,7 +202,7 @@ const ProductList: React.FC<Props> = ({ products, getProducts }) => {
                       <div key={index}>
                         <span>
                           SKU: {option.option_id} / size: {option.size} / price:
-                          ${option.price}
+                          ${option.price.toFixed(2)}
                         </span>
                       </div>
                     );

@@ -31,6 +31,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "s3-deploy": "aws s3 sync build/ s3://bakeshop-dashboard-app",
+    "client-deploy": "npm run build && npm run s3-deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

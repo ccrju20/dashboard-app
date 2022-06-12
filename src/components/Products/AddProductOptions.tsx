@@ -5,7 +5,7 @@ import { IAddProductOption } from "../Interfaces/IProductForm";
 import { SchemaOf, object, number } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -21,8 +21,6 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Popover from "@mui/material/Popover";
-import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import ProdPopover from "./ProdPopover";
 
 const PRODUCT_OPTIONS_API_URL = "api/v1/products/options";
@@ -32,10 +30,15 @@ export const addProductOptionSchema: SchemaOf<IAddProductOption> = object({
     .typeError("Must be a number greater than 1")
     .min(1)
     .required(),
-  size: number().typeError("Must be a number greater than 1").min(1).required(),
-  price: number()
-    .typeError("Must be a number greater than 1")
+  size: number()
+    .typeError("Must be a number greater than 1 or less than 50")
     .min(1)
+    .max(50)
+    .required(),
+  price: number()
+    .typeError("Must be a number greater than 1 or less than 200")
+    .min(1)
+    .max(200)
     .required(),
 });
 
@@ -76,7 +79,7 @@ const AddProductOptions: React.FC<Props> = ({
 
   // Submit Delete Option
   const deleteOption = (optionId: number): void => {
-    console.log(optionId)
+    console.log(optionId);
     close("closeButtonClick");
     handleCloseDelete();
 
@@ -139,8 +142,10 @@ const AddProductOptions: React.FC<Props> = ({
                             <Avatar>{index + 1}</Avatar>
                           </ListItemAvatar>
                           <ListItemText
-                            primary={` SKU: ${option.option_id} / size: ${option.size} /
-                            price: ${option.price}`}
+                            primary={` SKU: ${option.option_id} / size: ${
+                              option.size
+                            } /
+                            price: ${option.price.toFixed(2)}`}
                           />
 
                           <IconButton
@@ -161,7 +166,6 @@ const AddProductOptions: React.FC<Props> = ({
                             handleCloseDeleteProd={handleCloseDelete}
                             popoverProd={popoverProdOp}
                           />
-
                         </ListItem>
                       </div>
                     );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IAddProductOption, IProductForm } from "../../Interfaces/IProductForm";
 import { IDialog as Props } from "../../Interfaces/IDialog";
 import { object, string, number, array, SchemaOf } from "yup";
@@ -15,10 +15,15 @@ const productOptionSchema: SchemaOf<IAddProductOption> = object({
     .typeError("Must be a number greater than 1")
     .min(1)
     .required(),
-  size: number().typeError("Must be a number greater than 1").min(1).required(),
-  price: number()
-    .typeError("Must be a number greater than 1")
+  size: number()
+    .typeError("Must be a number greater than 1 or less than 50")
     .min(1)
+    .max(50)
+    .required(),
+  price: number()
+    .typeError("Must be a number greater than 1 or less than 200")
+    .min(1)
+    .max(200)
     .required(),
 });
 
@@ -40,13 +45,11 @@ const AddProductMain: React.FC<Props> = ({ open, close, getProducts }) => {
   const [updateError, setUpdateError] = useState(false);
 
   const submitProduct: SubmitHandler<IProductForm> = (data: IProductForm) => {
-    console.log(data);
     close("closeButtonClick");
 
     axios
       .post("api/v1/products", data)
       .then((res) => {
-        console.log(res);
         setNotificationMsg(`Product ID: ${res.data.id} - Added Successfully!`);
         setNotification(true);
         getProducts();
@@ -57,6 +60,12 @@ const AddProductMain: React.FC<Props> = ({ open, close, getProducts }) => {
         setNotificationMsg(err.message);
       });
   };
+
+  useEffect(() => {
+    if (methods.formState.isSubmitSuccessful) {
+      methods.reset();
+    }
+  }, [methods, methods.formState, methods.reset]);
 
   const handleCloseNotification = (
     event?: React.SyntheticEvent | Event,

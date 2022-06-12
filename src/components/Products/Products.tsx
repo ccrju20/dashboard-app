@@ -83,7 +83,6 @@ const Products = () => {
                     <Button
                       onClick={() => {
                         handleAddOpen();
-                        console.log("add");
                       }}
                       variant="outlined"
                       startIcon={<AddIcon />}
