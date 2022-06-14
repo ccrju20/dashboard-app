@@ -96,7 +96,7 @@ const EditProduct: React.FC<Props> = ({
     axios
       .put("api/v1/products", data)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setNotificationMsg(
           `Product ID: ${res.data.id} - Updated Successfully!`
         );
